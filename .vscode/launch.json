@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "DATA+AUTH",
+            "configurations": ["DATA", "AUTH"]
+        }
+    ],
+    "configurations": [
+        {
+            "name": "DATA",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}\\index.js",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "name": "AUTH",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}\\authServer.js",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        }
+    ]
+}
