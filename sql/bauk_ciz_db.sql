@@ -1,24 +1,39 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema bauk_ciz_db
+-- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `bauk_ciz_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `bauk_ciz_db`;
+-- -----------------------------------------------------
+-- Schema bpztl7fn5sdm5oaf3r6i
+-- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`addition`
+-- Schema bpztl7fn5sdm5oaf3r6i
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`addition` (
+CREATE SCHEMA IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `bpztl7fn5sdm5oaf3r6i` ;
+
+-- -----------------------------------------------------
+-- Table `bpztl7fn5sdm5oaf3r6i`.`addition`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`addition` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`place`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`place`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`place` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`place` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `PlaceName` VARCHAR(45) NOT NULL,
   `AreaCode` VARCHAR(45) NOT NULL,
@@ -32,9 +47,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`role`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`role`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`role` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`role` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `RoleName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ID`),
@@ -46,9 +61,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`status`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`status`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`status` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`status` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Status` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`ID`),
@@ -60,9 +75,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`user`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`user` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`user` (
   `ID` VARCHAR(40) NOT NULL,
   `FirstName` VARCHAR(20) NOT NULL,
   `LastName` VARCHAR(20) NOT NULL,
@@ -78,16 +93,19 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`user` (
   INDEX `User-Role_idx` (`IdRole` ASC) VISIBLE,
   CONSTRAINT `User-Role`
     FOREIGN KEY (`IdRole`)
-    REFERENCES `bauk_ciz_db`.`role` (`ID`),
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`role` (`ID`),
   CONSTRAINT `User-Status`
     FOREIGN KEY (`IdStatus`)
-    REFERENCES `bauk_ciz_db`.`status` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`status` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`adress`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`adress`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`adress` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`adress` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdUser` VARCHAR(45) NOT NULL,
   `StreetAndNumber` VARCHAR(80) NOT NULL,
@@ -99,26 +117,33 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`adress` (
   INDEX `Adress-Place_idx` (`IdPlace` ASC) VISIBLE,
   CONSTRAINT `Adress-Place`
     FOREIGN KEY (`IdPlace`)
-    REFERENCES `bauk_ciz_db`.`place` (`ID`),
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`place` (`ID`),
   CONSTRAINT `Adress-User`
     FOREIGN KEY (`IdUser`)
-    REFERENCES `bauk_ciz_db`.`user` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`user` (`ID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`order_status`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`order_status`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order_status` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`order_status` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`order`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`order`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`order` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdAdress` INT NOT NULL,
   `IdOrderStatus` INT NOT NULL,
@@ -129,27 +154,33 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order` (
   INDEX `Order-StatusOrder_idx` (`IdOrderStatus` ASC) VISIBLE,
   CONSTRAINT `Order-Adress`
     FOREIGN KEY (`IdAdress`)
-    REFERENCES `bauk_ciz_db`.`adress` (`ID`),
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`adress` (`ID`),
   CONSTRAINT `Order-StatusOrder`
     FOREIGN KEY (`IdOrderStatus`)
-    REFERENCES `bauk_ciz_db`.`order_status` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`order_status` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`picture`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`picture`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`picture` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`picture` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `File_Path` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`product`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`product`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`product` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`product` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdPicture` INT NOT NULL,
   `Name` VARCHAR(45) NOT NULL,
@@ -160,13 +191,16 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`product` (
   INDEX `Product-Picture_idx` (`IdPicture` ASC) VISIBLE,
   CONSTRAINT `Product-Picture`
     FOREIGN KEY (`IdPicture`)
-    REFERENCES `bauk_ciz_db`.`picture` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`picture` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`item`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`item`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`item` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`item` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdProduct` INT NOT NULL,
   `IdOrder` INT NOT NULL,
@@ -178,16 +212,19 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`item` (
   INDEX `Item-Product_idx` (`IdProduct` ASC) VISIBLE,
   CONSTRAINT `Item-Order`
     FOREIGN KEY (`IdOrder`)
-    REFERENCES `bauk_ciz_db`.`order` (`ID`),
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`order` (`ID`),
   CONSTRAINT `Item-Product`
     FOREIGN KEY (`IdProduct`)
-    REFERENCES `bauk_ciz_db`.`product` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`product` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`additions`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`additions`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`additions` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`additions` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdItem` INT NOT NULL,
   `IdAddition` INT NOT NULL,
@@ -197,16 +234,19 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`additions` (
   INDEX `Additions-Addition_idx` (`IdAddition` ASC) VISIBLE,
   CONSTRAINT `Additions-Addition`
     FOREIGN KEY (`IdAddition`)
-    REFERENCES `bauk_ciz_db`.`addition` (`ID`),
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`addition` (`ID`),
   CONSTRAINT `Additions-item`
     FOREIGN KEY (`IdItem`)
-    REFERENCES `bauk_ciz_db`.`item` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`item` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`auth`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`auth`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`auth` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`auth` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdUser` VARCHAR(45) NOT NULL,
   `RefreshToken` VARCHAR(200) NOT NULL,
@@ -215,17 +255,17 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`auth` (
   UNIQUE INDEX `RefreshToken_UNIQUE` (`RefreshToken` ASC) VISIBLE,
   CONSTRAINT `Auth-User`
     FOREIGN KEY (`IdUser`)
-    REFERENCES `bauk_ciz_db`.`user` (`ID`))
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`user` (`ID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`chat`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`chat`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`chat` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`chat` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdUser` VARCHAR(45) NOT NULL,
   `IdFirebase` VARCHAR(45) NOT NULL,
@@ -234,13 +274,16 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`chat` (
   INDEX `Chat-User_idx` (`IdUser` ASC) VISIBLE,
   CONSTRAINT `Chat-User`
     FOREIGN KEY (`IdUser`)
-    REFERENCES `bauk_ciz_db`.`user` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`user` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`mail_code`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`mail_code`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`mail_code` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`mail_code` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdUser` VARCHAR(45) NOT NULL,
   `Code` VARCHAR(5) NOT NULL,
@@ -250,17 +293,17 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`mail_code` (
   INDEX `M_C-User_idx` (`IdUser` ASC) VISIBLE,
   CONSTRAINT `M_C-User`
     FOREIGN KEY (`IdUser`)
-    REFERENCES `bauk_ciz_db`.`user` (`ID`))
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`user` (`ID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 30
+AUTO_INCREMENT = 31
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`order_user`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`order_user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order_user` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`order_user` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdUser` VARCHAR(45) NOT NULL,
   `IdOrder` INT NOT NULL,
@@ -270,16 +313,19 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order_user` (
   UNIQUE INDEX `IdOrder_UNIQUE` (`IdOrder` ASC) VISIBLE,
   CONSTRAINT `O_U-Order`
     FOREIGN KEY (`IdOrder`)
-    REFERENCES `bauk_ciz_db`.`order` (`ID`),
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`order` (`ID`),
   CONSTRAINT `O_U-User`
     FOREIGN KEY (`IdUser`)
-    REFERENCES `bauk_ciz_db`.`user` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`user` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`visit`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`visit`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`visit` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`visit` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Date` DATE NOT NULL,
   `IdPlace` INT NOT NULL,
@@ -290,13 +336,16 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`visit` (
   INDEX `Visit-Place_idx` (`IdPlace` ASC) VISIBLE,
   CONSTRAINT `Visit-Place`
     FOREIGN KEY (`IdPlace`)
-    REFERENCES `bauk_ciz_db`.`place` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`place` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`orders`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`orders`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`orders` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`orders` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdVisit` INT NOT NULL,
   `IdOrder` INT NOT NULL,
@@ -306,16 +355,19 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`orders` (
   INDEX `O_V-Visit_idx` (`IdVisit` ASC) VISIBLE,
   CONSTRAINT `O_V-Order`
     FOREIGN KEY (`IdOrder`)
-    REFERENCES `bauk_ciz_db`.`order` (`ID`),
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`order` (`ID`),
   CONSTRAINT `O_V-Visit`
     FOREIGN KEY (`IdVisit`)
-    REFERENCES `bauk_ciz_db`.`visit` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`visit` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`password`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`password`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`password` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`password` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdUser` VARCHAR(45) NOT NULL,
   `Hash` VARCHAR(200) NOT NULL,
@@ -326,17 +378,17 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`password` (
   UNIQUE INDEX `IdUser_UNIQUE` (`IdUser` ASC) VISIBLE,
   CONSTRAINT `Password`
     FOREIGN KEY (`IdUser`)
-    REFERENCES `bauk_ciz_db`.`user` (`ID`))
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`user` (`ID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 13
+AUTO_INCREMENT = 14
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`product_addition`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`product_addition`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`product_addition` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`product_addition` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdProduct` INT NOT NULL,
   `IdAddition` INT NOT NULL,
@@ -346,16 +398,19 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`product_addition` (
   INDEX `P_A-Addition_idx` (`IdAddition` ASC) VISIBLE,
   CONSTRAINT `P_A-Addition`
     FOREIGN KEY (`IdAddition`)
-    REFERENCES `bauk_ciz_db`.`addition` (`ID`),
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`addition` (`ID`),
   CONSTRAINT `P_A-Product`
     FOREIGN KEY (`IdProduct`)
-    REFERENCES `bauk_ciz_db`.`product` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`product` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`size`
+-- Table `bpztl7fn5sdm5oaf3r6i`.`size`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`size` (
+CREATE TABLE IF NOT EXISTS `bpztl7fn5sdm5oaf3r6i`.`size` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Size` VARCHAR(45) NOT NULL,
   `Price` DOUBLE NOT NULL,
@@ -365,4 +420,12 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`size` (
   INDEX `Size-Product_idx` (`IdProduct` ASC) VISIBLE,
   CONSTRAINT `Size-Product`
     FOREIGN KEY (`IdProduct`)
-    REFERENCES `bauk_ciz_db`.`product` (`ID`));
+    REFERENCES `bpztl7fn5sdm5oaf3r6i`.`product` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

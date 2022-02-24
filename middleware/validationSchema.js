@@ -69,7 +69,6 @@ const changePassword=[
         minUppercase: 1,
         minNumbers: 1
     }).withMessage('Password is not strong')
-
 ]
 
 export {userSchema, emailVerifyCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}

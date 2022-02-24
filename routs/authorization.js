@@ -17,7 +17,7 @@ router.post('/loginEmail', userSchema.loginSchema, auth.validateInput,
         const user=await userRepo.getUserIdByEmail(req.body.Email)
         if(user.length===0) return res.sendStatus(403)
 
-        const dbPass= await passwordRepo.getPassword(req.body.Password)
+        const dbPass= await passwordRepo.getPasswordById(user[0].ID)
         if(dbPass.length===0) return res.sendStatus(403)
         
         let password=req.body.Password

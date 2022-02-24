@@ -14,13 +14,23 @@ const pool= mySql.createPool({
 const promisePool = pool.promise();
 
 const queryWithData= async (sql, data)=>{
-    const [rows, fields]=await promisePool.query(sql, data)
-    return rows
+    try{
+        const [rows, fields]=await promisePool.query(sql, data)
+        return rows
     }
+    catch(ex){
+        return ex
+    }
+}
 
 const queryWithoutData=async (sql)=>{
-    const [rows, fields]=await promisePool.query(sql)
-    return rows
+    try{
+        const [rows, fields]=await promisePool.query(sql)
+        return rows
+    }
+    catch(ex){
+        return ex
+    }
 }
 
 

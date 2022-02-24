@@ -16,8 +16,14 @@ const putPassword=async(id, password)=>{
 
 const getPassword=async(password)=>{
     const sql=sqlQueries.getItems('ID, Hash, Salt ', tables.passwordTable)
-    const result= await queryWithData(sql, password)
+    const result= await queryWithData(sql)
     return result
 }
 
-export {postPassword, getPassword, putPassword}
+const getPasswordById=async(id)=>{
+    const sql=sqlQueries.getItemsByConditions('ID, Hash, Salt ', tables.passwordTable, 'IdUser=?')
+    const result= await queryWithData(sql, id)
+    return result
+}
+
+export {postPassword, getPassword, putPassword, getPasswordById}

@@ -20,8 +20,24 @@ const getUsersAsync=async()=>{
 }
 
 const getUserById=async(id)=>{
-    const sql=sqlQueries.getItemsByConditions('u.*, s.Status',
-    `${tables.statusTable} s , ${tables.userTable} u`, `u.ID = ? AND u.IdStatus=s.ID`)
+    const sql=sqlQueries.getItemsByConditions(
+        'u.*, s.Status',
+        `${tables.statusTable} s , ${tables.userTable} u`,
+        `u.ID = ? AND u.IdStatus=s.ID`)
+    return await queryWithData(sql, id)
+}
+
+const getAdressesOfUserAsync=async(id)=>{
+    const sql=sqlQueries.getItemsByConditions(
+        'a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.Active',
+        `${tables.adressTable} a , ${tables.placeTable} p`,
+        `a.IdUser = ? AND a.IdPlace=p.ID`
+    )
+    return await queryWithData(sql, id)
+}
+
+const getPlacesAsync=async(id)=>{
+    const sql=sqlQueries.getItems('*',tables.placeTable)
     return await queryWithData(sql, id)
 }
 
@@ -29,6 +45,7 @@ const setUserAsync=async(user)=>{
     const sql= sqlQueries.setItem(tables.userTable)
     return await queryWithData(sql, user)
 }
+
 const deleteUserAsync=async(id)=>{
     let sql = sqlQueries.deleteItem(tables.passwordTable, 'IdUser= ?')
     await queryWithData(sql, id)
@@ -65,6 +82,12 @@ const checkEmail=async(email)=>{
 }
 
 const checkID=async(id)=>{
+    const sql=sqlQueries.checkItem(`${tables.userTable} u, ${tables.roleTable} r`, `u.ID= ? AND u.IdRole= r.ID`)
+    const result=await queryWithData(sql, id)
+    return Object.values(result[0]).at(0)==1
+}
+
+const checAdminkID=async(id)=>{
     const sql=sqlQueries.checkItem(`${tables.userTable} u, ${tables.roleTable} r`, `u.ID= ? AND u.IdRole= r.ID AND r.RoleName='admin'`)
     const result=await queryWithData(sql, id)
     return Object.values(result[0]).at(0)==1
@@ -73,5 +96,7 @@ const checkID=async(id)=>{
 const getUserByPhoneNumber=(phoneNumber)=>{
     
 }
+
 export {getUsersAsync, setUserAsync, getUserById, deleteUserAsync, putUserAsync,
-    getUserByPhoneNumber, getUserIdByEmail, checkEmail, checkID}
+    getUserByPhoneNumber, getUserIdByEmail, checkEmail,
+    checkID, checAdminkID, getAdressesOfUserAsync, getPlacesAsync}
