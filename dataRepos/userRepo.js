@@ -27,13 +27,7 @@ const getUserById=async(id)=>{
 
 const setUserAsync=async(user)=>{
     const sql= sqlQueries.setItem(tables.userTable)
-    try{
-        return result=await queryWithData(sql, user)
-    }
-    catch (error){
-        return error
-
-    }
+    return await queryWithData(sql, user)
 }
 const deleteUserAsync=async(id)=>{
     let sql = sqlQueries.deleteItem(tables.passwordTable, 'IdUser= ?')

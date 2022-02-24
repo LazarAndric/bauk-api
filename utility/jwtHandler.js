@@ -8,7 +8,7 @@ const options={
     algorithm: 'RS256',
     issuer: 'Bauk_Ciz',
     encoding:'utf-8',
-    expiresIn:'2m'
+    expiresIn:'30m'
 }
 
 const generateToken=(headers, user)=>{
