@@ -1,5 +1,6 @@
 import * as jwt from '../utility/jwtHandler.js'
 import {validationResult} from 'express-validator'
+import * as authRepo from '../dataRepos/authRepo.js'
 
 export async function verifyUserToken(req,res, next) {
     const acessToken= req.headers['authorization']
@@ -28,11 +29,13 @@ export function verifyUserToken2(req,res, next) {
     next()
 }
 
-export function verifyTempToken(req,res, next){
+const verifyTempToken=async (req,res, next)=>{
     const token= req.headers['tempauth']
     if(!token) return res.sendStatus(401)
     const auth=jwt.verifyTempToken(token)
-    return auth ? next() : res.status(401).send('Token is not valid') 
+    if(!auth) return res.status(401).send('Token is not valid') 
+    const tempToken= await authRepo.getTempTokenByEmailAsync(req.body.Email)
+    return tempToken.TempToken===token ? next() : res.status(401).send('Token is not valid')
 }
 
 export function validateInput(req, res, next){
@@ -48,4 +51,4 @@ const validateUserAsync = async (req,res) => {
     req.data = data.json()
 }
 
-export {validateUserAsync}
+export {validateUserAsync, verifyTempToken}

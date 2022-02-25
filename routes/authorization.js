@@ -42,7 +42,7 @@ router.post('/forgotPassword', userSchema.emailSchema, auth.validateInput,
         if(!await userRepo.checkEmail(req.body.Email))
             return res.status(403).send({Message:'Email is not exist'})
         const result=await userRepo.getUserIdByEmail(req.body.Email)
-        const emailModel=await authRepo.verifyUserByEmailCode(result[0])
+        const emailModel=await authRepo.generateMailCodeAsync(result[0])
         return res.status(200).json({ExpireDate: emailModel.ExpireDate, Message: 'Code is sent too e-mail'})
 })
 
@@ -51,10 +51,11 @@ router.post('/verifyCode', userSchema.emailVerifyCodeSchema, auth.validateInput,
         if(!await userRepo.checkEmail(req.body.Email))
             return res.status(403).send({Message:'Email is not exist'})
         const result=await userRepo.getUserIdByEmail(req.body.Email)
-        const emailModel=await authRepo.checkEmailCodeAsync(result[0], req.body.Code)
+        const emailModel=await authRepo.verifyMailCodeAsync(result[0], req.body.Code)
         if(!emailModel.IsVerify) return res.status(401).send('Bad code')
         if(emailModel.ExpireDate<new Date()) return res.status(401).send('Token is expire')
         const tmpToken=jwt.generateTempToken()
+        await authRepo.putTempTokenAsync(req.body.Email, {TempToken: tmpToken.Tempauth})
         return res.header(tmpToken).sendStatus(200)
 })
 
@@ -68,7 +69,8 @@ router.post('/changePassword', userSchema.changePassword, auth.validateInput, au
         password=hashPassword(password, salt)
         const passwordResult= await passwordRepo.putPassword(
             result[0].ID,
-            {Hash: password.Hash, Salt: password.Salt})
+            {Hash: password.Hash, Salt: password.Salt}
+        )
         if(passwordResult.affectedRows==0) return res.sendStatus(403)
         return res.status(200).send('Password changed')
 })
