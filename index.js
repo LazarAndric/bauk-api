@@ -1,47 +1,41 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import usersRoute from './routs/users.js'
-import productsRoute from './routs/users.js'
-
 import swaggerUi from 'swagger-ui-express'
-import swaggerJsdoc from 'swagger-jsdoc'
+import swaggerDocs from 'swagger-jsdoc'
 
-const swaggerOpptions={
-  swaggerDefinition:{
+import usersRoute from './routes/users.js'
+import productsRoute from './routes/users.js'
+import swaggerJSDoc from 'swagger-jsdoc'
+
+const options={
+  definition: {
+    openapi: '3.0.0',
     info:{
-      title: 'Bauk API',
-      description: 'Its ciz cake API',
-      contacts: {
-        name: 'unLa4ky'
-      },
-      servers: ['http://localhost:5000','http://localhost:4000']
-    }
-  },
-  apis: ['index.js']
+      title: "Bauk Cheescake",
+      version: "0.0.1",
+      description:"Api for sale cheescakes"
+    },
+    servers:[
+      {
+        url: 'https://localhost:4000'
+      }
+    ],
+    apis:['./routes/*.js']
+  }
 }
 
-const swaggerDocs=swaggerJsdoc(swaggerOpptions)
+const specs = swaggerJSDoc(options)
+
 
 const PORT = process.env.PORT || 5000
 const app = express()
 
 app.use(bodyParser.json())
 
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
-
-//Routes
-/**
- * @swagger
- * /products:
- *   get:
- *     description: Get all users
- *     responses:
- *       '200': 
- *          description: Return all users
- */
 app.use('/products', productsRoute)
 app.use('/users', usersRoute)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 
 
 app.listen(PORT, () => {

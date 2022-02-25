@@ -1,23 +1,13 @@
 import express from 'express'
-import * as userRepo from './../dataRepos/userRepo.js'
+import * as userRepo from '../dataRepos/userRepo.js'
 import { v4 as uuidv4 } from 'uuid';
 import { body, check, validationResult } from 'express-validator'
-import errorEventHandler from './../sql/sqlErrorHandler.js'
+import errorEventHandler from '../sql/sqlErrorHandler.js'
 import * as auth from '../middleware/authorizationMiddleware.js'
 import * as userSchema from '../middleware/validationSchema.js'
 
 const router = express.Router()
 
-//Routes
-/**
- * @openapi
- * /users/all:
- *   get:
- *     description: Get all users
- *     responses:
- *       '200': description: Return all users
- *       '401': description: Not authorize
- */
 router.get('/all', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, 
     async (req,res)=>{
         if(!(await userRepo.checAdminkID(req.user.ID)))
