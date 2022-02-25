@@ -5,9 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "server": "nodemon index.js",
-    "authServer": "nodemon authServer.js",
-    "start": "concurrently \"npm:server\" \"npm:authServer\""
+    "start": "nodemon index.js",
+    "authServer": "nodemon authServer.js"
   },
   "keywords": [],
   "author": "",

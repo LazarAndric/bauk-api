@@ -6,7 +6,7 @@
     "compounds": [
         {
             "name": "DATA+AUTH",
-            "configurations": ["DATA", "AUTH"]
+            "configurations": ["DATA"]
         }
     ],
     "configurations": [
