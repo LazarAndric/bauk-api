@@ -8,9 +8,6 @@ const getItemsByConditions=(propArrayString,table, conditions) =>
 const setItem=(table) => 
     `INSERT INTO ${table} SET ?`
 
-const setItems=(table, keys) => 
-    `INSERT INTO ${table} (${keys}) VALUES ?`
-
 const deleteItem=(table, conditions) => 
     `DELETE FROM ${table} WHERE ${conditions}`
 
@@ -23,4 +20,4 @@ const updateItem=(table, conditions) =>
 const checkItem=(tables, condition)=>
     `SELECT EXISTS(SELECT * FROM ${tables} WHERE ${condition})`
 
-export {getItems, setItems, getItemsByConditions, setItem, deleteItem, deleteItemWithOption, updateItem, checkItem}
+export {getItems, getItemsByConditions, setItem, deleteItem, deleteItemWithOption, updateItem, checkItem}

@@ -8,20 +8,24 @@ import * as userSchema from '../middleware/validationSchema.js'
 
 const router = express.Router()
 
-router.get('/all', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync,
+router.get('/all', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, 
     async (req,res)=>{
+        if(!(await userRepo.checAdminkID(req.user.ID)))
+            return res.status(401).send('Not authorize')
         const result=await userRepo.getUsersAsync()
         return result.length!==0 ? res.status(200).send(result) : res.sendStatus(204)
     }
 )
 
-router.get('/', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAsync,
+router.get('/', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken,
     async (req,res)=>{
+        if(!(await userRepo.checkID(req.user.ID)))
+            return res.status(401).send('You are not authorize')
         let result=await userRepo.getUserById(req.user.ID)
         return result.length!==0 ? res.status(200).send(result[0]) : res.sendStatus(204)
 })
 
-router.get('/adresses', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAsync,
+router.get('/adresses', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken,
     async (req,res)=>{
         let result=await userRepo.getAdressesOfUserAsync(req.user.ID)
         res.status(200).json(result)

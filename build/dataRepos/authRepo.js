@@ -2,9 +2,8 @@ import {queryWithData, queryWithoutData} from '../sql/sqlConnection.js'
 import * as sqlQueries from '../sql/sqlQueries.js'
 import * as tables from '../sql/sqlTables/sqlUserTables.js'
 import stringMaker from '../utility/stringCreator.js'
-import mailer from '../utility/nodeMailer.js'
 
-const generateMailCodeAsync=async(result, email)=>{
+const generateMailCodeAsync=async(result)=>{
     const mailCode=stringMaker(5)
     let date= new Date()
     date.setMinutes(date.getMinutes()+2)
@@ -12,7 +11,7 @@ const generateMailCodeAsync=async(result, email)=>{
         await putMailCodeAsync(result.ID, mailCode, date)
     else await postMailCode(result.ID, mailCode, date)
 
-    mailer('lazarandric97@gmail.com', email, 'Verification mail', `Your veification code is: ${mailCode}`,'')
+    //mailer('lazarandric97@gmail.com', req.body.Email, 'Verification mail', `Your veification code is: ${id}`,'')
     return {Code: mailCode, ExpireDate: date}
 }
 
@@ -65,7 +64,7 @@ const putAuthTokenAsync=async(id, refreshToken)=>{
 const getUserByToken=async(refreshToken)=>{
     const sql= sqlQueries.getItemsByConditions('IdUser', tables.authTable, 'RefreshToken= ?')
     const result= await queryWithData(sql, refreshToken)
-    return result[0]
+    return result[0].IdUser
 }
 
 const getTempTokenByEmailAsync=async(refreshToken)=>{

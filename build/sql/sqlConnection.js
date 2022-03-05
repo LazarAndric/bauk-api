@@ -33,4 +33,6 @@ const queryWithoutData=async (sql)=>{
     }
 }
 
+
+
 export {queryWithData , queryWithoutData}
