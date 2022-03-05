@@ -31,13 +31,14 @@ const config={
             },
             order:{
                 orderTable:'`order`',
-                orderStatusTable:'`order_status`',
-                orderAdressTable:'`order_adress`'
+                orderStatusTable:'`order_status`'
             },
             visit:{
                 visitTable:'`visit`',
                 ordersTable:'`orders`'
+
             }
+
         }
     }
 }

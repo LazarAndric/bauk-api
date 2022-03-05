@@ -33,7 +33,7 @@ router.post('/loginEmail', userSchema.loginSchema, auth.validateInput,
         res.header(userToken).sendStatus(200)
 })
 
-router.post('/loginPhone', userSchema.changePassword, auth.validateInput, async(req,res)=>{
+router.post('/loginPhone', userSchema.changePassword, auth.validateInput, auth.verifyTempToken, async(req,res)=>{
 
 })
 
@@ -42,7 +42,7 @@ router.post('/forgotPassword', userSchema.emailSchema, auth.validateInput,
         if(!await userRepo.checkEmail(req.body.Email))
             return res.status(403).send({Message:'Email is not exist'})
         const result=await userRepo.getUserIdByEmail(req.body.Email)
-        const emailModel=await authRepo.generateMailCodeAsync(result[0], req.body.Email)
+        const emailModel=await authRepo.generateMailCodeAsync(result[0])
         return res.status(200).json({ExpireDate: emailModel.ExpireDate, Message: 'Code is sent too e-mail'})
 })
 
@@ -89,7 +89,6 @@ router.post('/register', userSchema.userSchema, auth.validateInput,
             IdStatus: req.body.IdStatus,
             IdRole: req.body.IdRole
         })
-        
         if(errorEventHandler(user).bool) return res.status(403).send('User already exist')
         const passwordResult= await passwordRepo.postPassword({
             IdUser: ID,
@@ -97,17 +96,12 @@ router.post('/register', userSchema.userSchema, auth.validateInput,
             Salt: password.Salt
         })
         if(passwordResult.affectedRows==0) return res.sendStatus(403)
-        for(const adress of req.body.Adresses)
-            adress.IdUser=ID
-        const adressResult= await userRepo.postAdressAsync(req.body.Adresses)
-        if(passwordResult.affectedRows==0) return res.sendStatus(403)
         res.status(201).send('User is created')
 })
 
 router.post('/generateToken', userSchema.generatetokenSchema, auth.validateInput, auth.verifyUserToken2,async (req, res)=>{
     if(req.isTokenVerify) return res.status(200).send('Your token is valid')
     const userId=await authRepo.getUserByToken(req.headers['refresh'])
-    if(userId==undefined) return res.status(403).send('Uesr not found')
     const user = await userRepo.getUserById(userId)
     const token=jwtHandler.generateToken(req.headers, user[0])
     return res.header(token).sendStatus(200)

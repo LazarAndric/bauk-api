@@ -13,7 +13,7 @@ const userSchema=[
         minUppercase: 1,
         minNumbers: 1
     }).withMessage('Password is not strong'),
-    body('Adresses').isArray()
+    body('StreetAndNumber').isLength({min:4})
 ]
 
 const userEditSchema=[
