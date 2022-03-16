@@ -9,7 +9,7 @@ const config={
             placeTable:'`place`',
             user:{
                 userTable:'`user`',
-                adressTable:'`adress`',
+                addressTable:'`address`',
                 statusTable:'`status`',
                 chatTable:'`chat`',
                 passwordTable:'`password`',
@@ -23,6 +23,7 @@ const config={
                 sizeTable:'`size`',
                 pictureTable:'`picture`',
                 productAdditionTable:'`product_addition`',
+                productSizeTable:'`product_size`',
             },
             additionTable:'`addition`',
             item:{
@@ -32,7 +33,7 @@ const config={
             order:{
                 orderTable:'`order`',
                 orderStatusTable:'`order_status`',
-                orderAdressTable:'`order_adress`'
+                orderAddressTable:'`order_address`'
             },
             visit:{
                 visitTable:'`visit`',

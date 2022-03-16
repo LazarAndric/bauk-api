@@ -1,7 +1,5 @@
 import express from 'express'
 import * as userRepo from '../dataRepos/userRepo.js'
-import { v4 as uuidv4 } from 'uuid';
-import { body, check, validationResult } from 'express-validator'
 import errorEventHandler from '../sql/sqlErrorHandler.js'
 import * as auth from '../middleware/authorizationMiddleware.js'
 import * as userSchema from '../middleware/validationSchema.js'
@@ -21,9 +19,9 @@ router.get('/', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyU
         return result.length!==0 ? res.status(200).send(result[0]) : res.sendStatus(204)
 })
 
-router.get('/adresses', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAsync,
+router.get('/addresses', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAsync,
     async (req,res)=>{
-        let result=await userRepo.getAdressesOfUserAsync(req.user.ID)
+        let result=await userRepo.getAddressesOfUserAsync(req.user.ID)
         res.status(200).json(result)
 })
 
@@ -49,15 +47,3 @@ router.put('/', userSchema.userEditSchema, auth.validateInput, auth.verifyUserTo
 })
 
 export default router
-
-// router.post('/',
-// async (req,res)=>{
-//     const errors=validationResult(req)
-//     if(!errors.isEmpty())
-//         return res.status(400).json({err: errors.array()})
-//     const id=uuidv4()
-//     let user={ID: id, ...req.body}
-//     let result=await userRepo.setUserAsync(user)
-//     result=errorEventHandler(result)
-//     return (result.bool ? res.status(403) : res.status(201)).send(result.res.messsage)
-// })

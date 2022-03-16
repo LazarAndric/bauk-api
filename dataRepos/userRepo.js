@@ -4,15 +4,20 @@ import * as tables from '../sql/sqlTables/sqlUserTables.js'
 import * as orderTable from '../sql/sqlTables/sqlOrderTable.js'
 
 const getUsersAsync=async()=>{
-    let sql=sqlQueries.getItemsByConditions('u.ID, u.FirstName, u.LastName, u.PhoneNumber, u.Email, s.Status',
-        `${tables.statusTable} s , ${tables.userTable} u`,
-        `u.IdStatus=s.ID`)
+    let sql=sqlQueries.getItemsByConditions('u.ID, u.FirstName, u.LastName, u.PhoneNumber, u.Email, s.ID, s.Status, r.ID, r.RoleName',
+        `${tables.statusTable} s , ${tables.userTable} u, ${tables.roleTable} r`,
+        `u.IdStatus=s.ID AND u.IdRole=r.ID`)
     const result=await queryWithoutData(sql)
     for(const res of result){
-        sql=sqlQueries.getItemsByConditions('a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.Active',
-        `${tables.adressTable} a, ${tables.placeTable} p`,
+        sql=sqlQueries.getItemsByConditions('a.ID, a.StreetAndNumber, a.GpsLocation, p.ID, p.PlaceName, p.Active',
+        `${tables.addressTable} a, ${tables.placeTable} p`,
         `a.IdUser= ? AND a.IdPlace=p.ID`)
-        res.Adresses=await queryWithData(sql, res.ID)
+        res.Addresses=await queryWithData(sql, res.ID)
+
+        sql=sqlQueries.getItemsByConditions('o.ID, o.Price, o.Description, os.Name, a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.AreaCode',
+        `${tables.orderUserTable} ou, ${orderTable.orderTable} o, ${tables.addressTable} a, ${orderTable.orderAddressTable} oa, ${tables.placeTable} p, ${orderTable.orderStatusTable} os`,
+        `ou.IdUser=? AND ou.IdOrder=o.ID AND o.ID=oa.IdOrder AND oa.IdAddress=a.ID AND a.IdPlace=p.ID AND o.IdOrderStatus=os.ID`)
+        res.Orders=await queryWithData(sql, res.ID)
     }
     return result
 }
@@ -26,22 +31,21 @@ const getUserById=async(id)=>{
     if(result.length==0) return {IsDone: false, Message: 'User is not authorize'}
 
     sql=sqlQueries.getItemsByConditions('a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.Active',
-        `${tables.adressTable} a, ${tables.placeTable} p`,
+        `${tables.addressTable} a, ${tables.placeTable} p`,
         `a.IdUser= ? AND a.IdPlace=p.ID`)
-    result[0].Adresses=await queryWithData(sql, result[0].ID)
+    result[0].Addresses=await queryWithData(sql, result[0].ID)
 
-    //TODO: PROBLEM WITH THIS REQUEST
-    sql=sqlQueries.getItemsByConditions('o.ID, a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.AreaCode, os.Name, o.Price',
-        `${tables.orderUserTable} ou, ${orderTable.orderTable} o, ${tables.adressTable} a, ${orderTable.orderAdressTable} oa, ${tables.placeTable} p, ${orderTable.orderStatusTable} os`,
-        `ou.IdUser=? AND ou.IdOrder=o.ID AND o.ID=oa.IdOrder AND oa.IdAdress=a.ID AND a.IdPlace=p.ID AND o.IdOrderStatus=os.ID`)
+    sql=sqlQueries.getItemsByConditions('o.ID, o.Price, o.Description, os.Name, a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.AreaCode',
+        `${tables.orderUserTable} ou, ${orderTable.orderTable} o, ${tables.addressTable} a, ${orderTable.orderAddressTable} oa, ${tables.placeTable} p, ${orderTable.orderStatusTable} os`,
+        `ou.IdUser=? AND ou.IdOrder=o.ID AND o.ID=oa.IdOrder AND oa.IdAddress=a.ID AND a.IdPlace=p.ID AND o.IdOrderStatus=os.ID`)
     result[0].Orders=await queryWithData(sql, result[0].ID)
     return result
 }
 
-const getAdressesOfUserAsync=async(id)=>{
+const getAddressesOfUserAsync=async(id)=>{
     const sql=sqlQueries.getItemsByConditions(
         'a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.Active',
-        `${tables.adressTable} a , ${tables.placeTable} p`,
+        `${tables.addressTable} a , ${tables.placeTable} p`,
         `a.IdUser = ? AND a.IdPlace=p.ID`
     )
     return await queryWithData(sql, id)
@@ -62,11 +66,11 @@ const deleteUserAsync=async(id)=>{
     return await queryWithData(sql, id)
 }
 
-const postAdressAsync=async(adresses)=>{
+const postAddressAsync=async(addresses)=>{
 
-    let keys=Object.keys(adresses[0])
-    const sql =sqlQueries.setItems(tables.adressTable, keys)
-    let value=adresses.map(obj=> keys.map(key=> obj[key]))
+    let keys=Object.keys(addresses[0])
+    const sql =sqlQueries.setItems(tables.addressTable, keys)
+    let value=addresses.map(obj=> keys.map(key=> obj[key]))
     return await queryWithData(sql, [value])
 }
 
@@ -105,5 +109,5 @@ const getUserByPhoneNumber=(phoneNumber)=>{
 }
 
 export {getUsersAsync, setUserAsync, getUserById, deleteUserAsync, putUserAsync,
-    getUserByPhoneNumber, getUserIdByEmail, checkEmail, postAdressAsync,
-    checkID, checAdminkID, getAdressesOfUserAsync, getPlacesAsync}
+    getUserByPhoneNumber, getUserIdByEmail, checkEmail, postAddressAsync,
+    checkID, checAdminkID, getAddressesOfUserAsync, getPlacesAsync}

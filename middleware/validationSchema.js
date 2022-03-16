@@ -1,48 +1,10 @@
-import {body, header} from 'express-validator'
-
-const userSchema=[
-    body('FirstName').isString().isLength({min:2}),
-    body('LastName').isString().isLength({min:2}),
-    body('PhoneNumber').isMobilePhone('sr-RS'),
-    body('Email').isEmail().withMessage('Must contain e-mail'),
-    body('IdStatus').isNumeric({no_symbols:true}),
-    body('IdRole').isNumeric({no_symbols:true}).exists('checkNull'),
-    body('Password').isStrongPassword({
-        minLength: 7,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1
-    }).withMessage('Password is not strong'),
-    body('Adresses').isArray()
-]
-
-const userEditSchema=[
-    header('Authorization').contains('Barear '),
-    body('FirstName').isString().isLength({min:2}),
-    body('LastName').isString().isLength({min:2}),
-    body('PhoneNumber').isMobilePhone('sr-RS'),
-    body('Email').isEmail().withMessage('Must contain e-mail'),
-    body('IdStatus').isNumeric({no_symbols:true}),
-    body('IdRole').isNumeric({no_symbols:true}).exists('checkNull'),
-    body('Password').isStrongPassword({
-        minLength: 7,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1
-    }).withMessage('Password is not strong'),
-    body('StreetAndNumber').isLength({min:4})
-]
+import {body, check, checkSchema, header} from 'express-validator'
 
 const emailSchema=[
     body('Email').isEmail().withMessage('Must contain e-mail')
 ]
 
-const emailVerifyCodeSchema=[
-    body('Email').isEmail().withMessage('Must contain e-mail'),
-    body('Code').isLength({min:5, max:5})
-]
-const loginSchema=[
-    body('Email').isEmail().withMessage('Must contain e-mail'),
+const passwordSchema=[
     body('Password').isStrongPassword({
         minLength: 7,
         minLowercase: 1,
@@ -52,23 +14,102 @@ const loginSchema=[
 ]
 
 const auhorizedUserSchema=[
-    header('Authorization').contains('Barear ')
+    header('Authorization').contains('Bearer ')
+]
+
+const userSchema=[
+    body('FirstName').isString().isLength({min:2}),
+    body('LastName').isString().isLength({min:2}),
+    body('PhoneNumber').isMobilePhone('sr-RS'),
+    emailSchema,
+    body('IdStatus').isNumeric({no_symbols:true}),
+    body('IdRole').isNumeric({no_symbols:true}).exists('checkNull'),
+    passwordSchema,
+    body('Addresses').isArray().isLength({min:1}),
+    body('Addresses.*.StreetAndNumber').exists('checkNull'),
+    body('Addresses.*.IdPlace').exists('checkNull'),
+    body('Addresses.*.GpsLocation').exists('checkNull')
+]
+
+const userEditSchema=[
+    auhorizedUserSchema,
+    body('FirstName').isString().isLength({min:2}),
+    body('LastName').isString().isLength({min:2}),
+    body('PhoneNumber').isMobilePhone('sr-RS'),
+    emailSchema,
+    body('IdStatus').isNumeric({no_symbols:true}),
+    body('IdRole').isNumeric({no_symbols:true}).exists('checkNull'),
+    passwordSchema
+]
+
+const emailVerifyCodeSchema=[
+    emailSchema,
+    body('Code').isLength({min:5, max:5})
+]
+
+const loginSchema=[
+    emailSchema,
+    passwordSchema
 ]
 
 const generatetokenSchema=[
-    header('Authorization').contains('Barear '),
+    auhorizedUserSchema,
     header('Refresh')
 ]
 
 const changePassword=[
-    body('Email').isEmail().withMessage('Must contain e-mail'),
+    emailSchema,
     header('Tempauth').isString().exists('checkNull'),
-    body('Password').isStrongPassword({
-        minLength: 7,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1
-    }).withMessage('Password is not strong')
+    passwordSchema
 ]
 
-export {userSchema, emailVerifyCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}
+const postPlace=[
+    body('PlaceName').exists('checkNull'),
+    body('AreaCode').exists('checkNull')
+]
+
+const postProduct=[
+    body('IdPicture').exists('checkNull'),
+    body('Name').exists('checkNull'),
+    body('Description').exists('checkNull'),
+    body('Available').exists('checkNull').isBoolean(),
+    body('Sizes').exists('checkNull').isArray(),
+    body('Sizes.*.IdSize').exists('checkNull'),
+    body('Sizes.*.Price').exists('checkNull'),
+    body('Additions').exists('checkNull').isArray(),
+    body('Additions.*.IdAddition').exists('checkNull')
+]
+
+const postSize=[
+    body('Size').exists('checkNull')
+]
+
+const postSizes=[
+    body().isArray().exists('checkNull'),
+    body('*.Size').exists('checkNull')
+]
+
+const postAddition=[
+    body('Name').exists('checkNull'),
+    body('Price').exists('checkNull')
+]
+
+const postAdditions=[
+    body().isArray().exists('checkNull'),
+    body('*.Name').exists('checkNull'),
+    body('*.Price').exists('checkNull')
+]
+
+const postVisit=[
+    body('Date').isDate('DD/MM/YYYY/').exists('checkNull'),
+    body('IdPlace').exists('checkNull'),
+    body('SlotsNumber').exists('checkNull')
+]
+
+const postVisits=[
+    body('*.Date').isDate('YYYY-MM-DD').exists('checkNull'),
+    body('*.IdPlace').exists('checkNull'),
+    body('*.SlotsNumber').exists('checkNull')
+]
+
+export {postVisits, postVisit, postAddition, postAdditions, postSizes,postSize, postProduct, postPlace, userSchema, emailVerifyCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}

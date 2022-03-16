@@ -1,0 +1,1265 @@
+{ 
+    "openapi" : "3.0.3",
+    "info" : {
+        "title" : "Bauk Cheescake",
+        "version" : "0.0.11",
+        "description" : "appiid: 3232f21e-653e-4e98-b46d-c34cbc751182"
+    },
+    "servers":[
+        {
+            "url": "http://localhost:5000"
+        }
+    ],
+    "security": [
+        {
+            "BearerAuth":[],
+            "Refresh":[],
+            "ChangePassword":[],
+            "AppiId":[]
+        }
+    ],
+    "paths": {
+        "/users/all":{
+            "get":{
+                "security": [
+                    {
+                        "BearerAuth":[]
+                    }
+                ],
+                "description":"Get all users. Need jwt authorization",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "400":{
+                        "description": "Bad request",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg":{
+                                                        "type":"string",
+                                                        "example":"Invalid value"
+                                                    },
+                                                    "param":{
+                                                        "type":"string",
+                                                        "example":"authorization"
+                                                    },
+                                                    "location":{
+                                                        "type":"string",
+                                                        "example":"headers"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204":{
+                        "description": "No Content"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "$ref" : "#/components/schemas/GetUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users":{
+            "get":{
+                "security": [
+                    {
+                        "BearerAuth":[]
+                    }
+                ],
+                "description":"Get user by jwt token. Need jwt authorization",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "400":{
+                        "description": "Bad request",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg":{
+                                                        "type":"string",
+                                                        "example":"Invalid value"
+                                                    },
+                                                    "param":{
+                                                        "type":"string",
+                                                        "example":"authorization"
+                                                    },
+                                                    "location":{
+                                                        "type":"string",
+                                                        "example":"headers"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204":{
+                        "description": "No Content"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "$ref" : "#/components/schemas/GetUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/authorization/loginEmail":{
+            "post":{
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Credential"
+                            }
+                        }
+                    }
+                },
+                "description":"Login with e-mail adress",
+                "tags": [
+                    "Authorization"
+                ],
+                "responses": {
+                    "400":{
+                        "description": "Bad request",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg":{
+                                                        "type":"string",
+                                                        "example":"Invalid value"
+                                                    },
+                                                    "param":{
+                                                        "type":"string",
+                                                        "example":"Email"
+                                                    },
+                                                    "location":{
+                                                        "type":"string",
+                                                        "example":"body"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description": "Forbidden"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "headers": {
+                            "Token":{
+                                "schema":{
+                                    "type": "string",
+                                    "example":"Bearer asdfsxcvr"
+                                }
+                            },
+                                
+                            "Refresh":{
+                                "schema":{
+                                    "type": "string",
+                                    "example":"asdfsxcvr"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/authorization/forgotPassword":{
+            "post":{
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/forgotPassword"
+                            }
+                        }
+                    }
+                },
+                "description":"Forgot password",
+                "tags": [
+                    "Authorization"
+                ],
+                "responses": {
+                    "400":{
+                        "description": "Bad request",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg":{
+                                                        "type":"string",
+                                                        "example":"Invalid value"
+                                                    },
+                                                    "param":{
+                                                        "type":"string",
+                                                        "example":"Email"
+                                                    },
+                                                    "location":{
+                                                        "type":"string",
+                                                        "example":"body"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description": "Forbidden",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "Message":{
+                                            "type": "string",
+                                            "example":"Email is not exist"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "ExpireDate": {
+                                            "type":"string",
+                                            "example": "2022-03-10T21:55:53.642Z"
+                                        },
+                                        "Message":{
+                                            "type": "string",
+                                            "example":"Code is sent too e-mail"
+                                        } 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/authorization/verifyCode":{
+            "post":{
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/verifyCode"
+                            }
+                        }
+                    }
+                },
+                "description":"Verify code from email",
+                "tags": [
+                    "Authorization"
+                ],
+                "responses": {
+                    "400":{
+                        "description": "Bad request",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg":{
+                                                        "type":"string",
+                                                        "example":"Invalid value"
+                                                    },
+                                                    "param":{
+                                                        "type":"string",
+                                                        "example":"Email"
+                                                    },
+                                                    "location":{
+                                                        "type":"string",
+                                                        "example":"body"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "403":{
+                        "description": "Forbidden"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "headers": {
+                            "Tempauth":{
+                                "schema":{
+                                    "type": "string",
+                                    "example":"asdffdger"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/authorization/changePassword":{
+            "post":{
+                "security": [
+                    {
+                        "ChangePassword":[]
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Credential"
+                            }
+                        }
+                    }
+                },
+                "description":"Change password",
+                "tags": [
+                    "Authorization"
+                ],
+                "responses": {
+                    "400":{
+                        "description": "Bad request",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg":{
+                                                        "type":"string",
+                                                        "example":"Invalid value"
+                                                    },
+                                                    "param":{
+                                                        "type":"string",
+                                                        "example":"Email"
+                                                    },
+                                                    "location":{
+                                                        "type":"string",
+                                                        "example":"headers"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "403":{
+                        "description": "Forbidden"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "string",
+                                    "example":"Password changed"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/authorization/register":{
+            "post":{
+                "description":"Register user",
+                "tags": [
+                    "Authorization"
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Register"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400":{
+                        "description": "Bad request",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg":{
+                                                        "type":"string",
+                                                        "example":"Invalid value"
+                                                    },
+                                                    "param":{
+                                                        "type":"string",
+                                                        "example":"Email"
+                                                    },
+                                                    "location":{
+                                                        "type":"string",
+                                                        "example":"body"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description": "Forbidden"
+                    },
+                    "201":{
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/authorization/generateToken":{
+            "post":{
+                "security": [
+                    {
+                        "BearerAuth":[],
+                        "Refresh":[]
+                    }
+                ],
+                "description":"Generate token by old refresh and access (jwt) token",
+                "tags": [
+                    "Authorization"
+                ],
+                "responses": {
+                    "400":{
+                        "description": "Bad request",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg":{
+                                                        "type":"string",
+                                                        "example":"Invalid value"
+                                                    },
+                                                    "param":{
+                                                        "type":"string",
+                                                        "example":"BearerAuth"
+                                                    },
+                                                    "location":{
+                                                        "type":"string",
+                                                        "example":"headers"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "403":{
+                        "description": "BadRequest"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "string",
+                                    "example":"Your token is valid"
+                                }
+                            }
+                        }
+                    },
+                    "205":{
+                        "description": "Reset Content",
+                        "headers": {
+                            "Authorization": {
+                                "schema":{
+                                    "type": "string"
+                                }
+                            },
+                            "Refresh": {
+                                "schema":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/visits/{id}":{
+            "get":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "Get visit by id",
+                "tags": [
+                    "Visits"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/VisitOrder"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/visits":{
+            "get":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "description": "Get all visits",
+                "tags": [
+                    "Visits"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/VisitOrder"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/visits/":{
+            "post":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "description": "Post visit",
+                "tags": [
+                    "Visits"
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/PostVisit"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201":{
+                        "description": "Created"
+                    },
+                    "401":{
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/visits/multi":{
+            "post":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "description": "Post visits",
+                "tags": [
+                    "Visits"
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "type": "array",
+                                "items":{
+                                    "$ref":"#/components/schemas/PostVisit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201":{
+                        "description": "Created"
+                    },
+                    "401":{
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        },
+        "/visits/{vId}":{
+            "put":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "vId",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "Put visit",
+                "tags": [
+                    "Visits"
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/PostVisit"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201":{
+                        "description": "Created"
+                    },
+                    "401":{
+                        "description": "Unauthorize"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "BearerAuth":{
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "Refresh":{
+                "type": "apiKey",
+                "in": "header",
+                "name": "Refresh"
+            },
+            "ChangePassword":{
+                "type": "apiKey",
+                "in": "header",
+                "name": "Tempauth"
+            },
+            "AppiId":{
+                "type": "apiKey",
+                "in": "header",
+                "name": "appiId"
+            }
+        },
+        "schemas": {
+            "VisitOrder":{
+                "required": [
+                    "Visit",
+                    "Orders"
+                ],
+                "properties": {
+                    "Visit":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Visit"
+                    },
+                    "Orders":{
+                        "type": "array",
+                        "items":{
+                            "type": "object",
+                            "$ref":"#/components/schemas/Order"
+                        }
+                    }
+                }
+            },
+            "Visit":{
+                "type": "object",
+                "properties": {
+                    "ID":{
+                        "type": "integer"
+                    },
+                    "Date":{
+                        "type": "string"
+                    },
+                    "SlotsNumber":{
+                        "type": "integer"
+                    },
+                    "Price":{
+                        "type": "integer"
+                    },
+                    "PlaceName":{
+                        "type": "string"
+                    },
+                    "AreaCode":{
+                        "type": "string"
+                    },
+                    "Active":{
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PostVisit":{
+                "type": "object",
+                "properties": {
+                    "Date":{
+                        "type": "string"
+                    },
+                    "IdPlace":{
+                        "type": "integer"
+                    },
+                    "SlotsNumber":{
+                        "type": "integer"
+                    }
+                }
+            },
+            "Order":{
+                "type": "object",
+                "properties": {
+                    "ID":{
+                        "type": "integer"
+                    },
+                    "Price":{
+                        "type": "integer"
+                    },
+                    "Description":{
+                        "type": "string"
+                    },
+                    "Name":{
+                        "type": "string"
+                    },
+                    "FirstName":{
+                        "type": "string"
+                    },
+                    "LastName":{
+                        "type": "string"
+                    },
+                    "PhoneNumber":{
+                        "type": "string"
+                    },
+                    "Email":{
+                        "type": "string"
+                    }
+                }
+            },
+            "Register":{
+                "type": "object",
+                "required": [
+                    "FirstName",
+                    "LastName",
+                    "PhoneNumber",
+                    "Email",
+                    "IdStatus",
+                    "IdRole",
+                    "Password",
+                    "Adressess"
+                ],
+                "properties": {
+                    "FirstName":{
+                        "type": "string"
+                    },
+                    "LastName":{
+                        "type": "string"
+                    },
+                    "PhoneNumber":{
+                        "type": "string"
+                    },
+                    "Email":{
+                        "type": "string"
+                    },
+                    "IdStatus":{
+                        "type": "string"
+                    },
+                    "IdRole":{
+                        "type": "string"
+                    },
+                    "Password":{
+                        "type": "string"
+                    },
+                    "Addresses":{
+                        "type": "array",
+                        "items":{
+                            "type": "object",
+                            "required": [
+                                "StreetAndNumber",
+                                "GpsLocation",
+                                "IdPlace"
+                            ],
+                            "properties": {
+                                "StreetAndNumber":{
+                                    "type": "string"
+                                },
+                                "GpsLocation":{
+                                    "type": "string"
+                                },
+                                "IdPlace":{
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "GetUsers":{
+                "type": "array",
+                "items":{
+                    "type": "object",
+                    "required": [
+                        "ID",
+                        "FirstName",
+                        "LastName",
+                        "PhoneNumber",
+                        "Email",
+                        "IdStatus",
+                        "IdRole"
+                    ],
+                    "properties": {
+                        "ID":{
+                            "type": "string"
+                        },
+                        "FirstName":{
+                            "type": "string"
+                        },
+                        "LastName":{
+                            "type": "string"
+                        },
+                        "PhoneNumber":{
+                            "type": "string"
+                        },
+                        "Email":{
+                            "type": "string"
+                        },
+                        "Status":{
+                            "type": "object",
+                            "required": [
+                                "ID",
+                                "Status"
+                            ],
+                            "properties": {
+                                "ID":{
+                                    "type": "integer"
+                                },
+                                "Status":{
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "Role":{
+                            "type": "object",
+                            "required": [
+                                "ID",
+                                "RoleName"
+                            ],
+                            "properties": {
+                                "ID":{
+                                    "type": "integer"
+                                },
+                                "RoleName":{
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "Addresses":{
+                            "type": "array",
+                            "items":{
+                                "type": "object",
+                                "required": [
+                                    "ID",
+                                    "StreetAndNumber",
+                                    "GpsLocation",
+                                    "PlaceName",
+                                    "AreaCode",
+                                    "Active"
+                                ],
+                                "properties": {
+                                    "ID":{
+                                        "type": "integer"
+                                    },
+                                    "StreetAndNumber":{
+                                        "type": "string"
+                                    },
+                                    "GpsLocation":{
+                                        "type": "string"
+                                    },
+                                    "PlaceName":{
+                                        "type": "string"
+                                    },
+                                    "AreaCode":{
+                                        "type": "string"
+                                    },
+                                    "Active":{
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "GetUser":{
+                "type": "object",
+                "required": [
+                    "ID",
+                    "FirstName",
+                    "LastName",
+                    "PhoneNumber",
+                    "Email",
+                    "IdStatus",
+                    "IdRole"
+                ],
+                "properties": {
+                    "ID":{
+                        "type": "string"
+                    },
+                    "FirstName":{
+                        "type": "string"
+                    },
+                    "LastName":{
+                        "type": "string"
+                    },
+                    "PhoneNumber":{
+                        "type": "string"
+                    },
+                    "Email":{
+                        "type": "string"
+                    },
+                    "Status":{
+                        "type": "object",
+                        "required": [
+                            "ID",
+                            "Status"
+                        ],
+                        "properties": {
+                            "ID":{
+                                "type": "integer"
+                            },
+                            "Status":{
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "Role":{
+                        "type": "object",
+                        "required": [
+                            "ID",
+                            "RoleName"
+                        ],
+                        "properties": {
+                            "ID":{
+                                "type": "integer"
+                            },
+                            "RoleName":{
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "Addresses":{
+                        "type": "array",
+                        "items":{
+                            "type": "object",
+                            "required": [
+                                "ID",
+                                "StreetAndNumber",
+                                "GpsLocation",
+                                "PlaceName",
+                                "AreaCode",
+                                "Active"
+                            ],
+                            "properties": {
+                                "ID":{
+                                    "type": "integer"
+                                },
+                                "StreetAndNumber":{
+                                    "type": "string"
+                                },
+                                "GpsLocation":{
+                                    "type": "string"
+                                },
+                                "PlaceName":{
+                                    "type": "string"
+                                },
+                                "AreaCode":{
+                                    "type": "string"
+                                },
+                                "Active":{
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "GetAdresses":{
+                "type": "array",
+                "items":{
+                    "type": "object",
+                    "required": [
+                        "ID",
+                        "StreetAndNumber",
+                        "GpsLocation",
+                        "PlaceName",
+                        "AreaCode",
+                        "Active"
+                    ],
+                    "properties": {
+                        "ID":{
+                            "type": "integer"
+                        },
+                        "StreetAndNumber":{
+                            "type": "string"
+                        },
+                        "GpsLocation":{
+                            "type": "string"
+                        },
+                        "PlaceName":{
+                            "type": "string"
+                        },
+                        "AreaCode":{
+                            "type": "string"
+                        },
+                        "Active":{
+                            "type": "boolean"
+                        }
+                    }
+                }
+            },
+            "DeleteUser":{
+             "type": "object",
+             "required": [
+                 "ID"
+             ],
+             "properties": {
+                 "ID":{
+                     "type": "integer"
+                 }
+             }   
+            },
+            "PutUser":{
+                "type": "object",
+                "required": [
+                    "FirstName",
+                    "LastName",
+                    "PhoneNumber",
+                    "Email",
+                    "IdStatus",
+                    "IdRole"
+                ],
+                "properties": {
+                    "FirstName":{
+                        "type": "string"
+                    },
+                    "LastName":{
+                        "type": "string"
+                    },
+                    "PhoneNumber":{
+                        "type": "string"
+                    },
+                    "Email":{
+                        "type": "string"
+                    },
+                    "IdStatus":{
+                        "type": "integer"
+                    },
+                    "IdRole":{
+                        "type": "integer"
+                    },
+                    "Addresses":{
+                        "type": "array",
+                        "items":{
+                            "type": "object",
+                            "required": [
+                                "StreetAndNumber",
+                                "GpsLocation",
+                                "PlaceName",
+                                "AreaCode",
+                                "Active"
+                            ],
+                            "properties": {
+                                "StreetAndNumber":{
+                                    "type": "string"
+                                },
+                                "GpsLocation":{
+                                    "type": "string"
+                                },
+                                "PlaceName":{
+                                    "type": "string"
+                                },
+                                "AreaCode":{
+                                    "type": "string"
+                                },
+                                "Active":{
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Credential":{
+                "type": "object",
+                "required": [
+                    "Email",
+                    "Password"
+                ],
+                "properties": {
+                    "Email":{
+                        "type": "string"
+                    },
+                    "Password":{
+                        "type": "string"
+                    }
+                }
+            },
+            "forgotPassword":{
+                "type": "object",
+                "required": [
+                    "Email"
+                ],
+                "properties": {
+                    "Email":{
+                        "type": "string"
+                    }
+                } 
+            },
+            "verifyCode":{
+                "type": "object",
+                "required": [
+                    "Email",
+                    "Code"
+                ],
+                "properties": {
+                    "Email":{
+                        "type": "string"
+                    },
+                    "Code":{
+                        "type": "string"
+                    }
+                } 
+            }
+        }
+    }
+}
