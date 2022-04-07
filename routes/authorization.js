@@ -59,7 +59,7 @@ router.post('/verifyCode', userSchema.emailVerifyCodeSchema, auth.validateInput,
         return res.header(tmpToken).sendStatus(200)
 })
 
-router.post('/changePassword', userSchema.changePassword, auth.validateInput, auth.verifyTempToken,
+router.post('/changePassword', auth.verifyTempToken,
     async(req,res)=>{
         const salt=uuidv4()
         let email=req.body.Email
@@ -90,7 +90,7 @@ router.post('/register', userSchema.userSchema, auth.validateInput,
             IdRole: req.body.IdRole
         })
         if(errorEventHandler(user).bool) return res.sendStatus(403)
-        if(passwordResult.affectedRows==0) return res.sendStatus(403)
+        if(user.affectedRows==0) return res.sendStatus(403)
         const passwordResult= await passwordRepo.postPassword({
             IdUser: ID,
             Hash: password.Hash,

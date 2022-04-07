@@ -74,7 +74,7 @@ export function validateInput(req, res, next){
     if(!errors.isEmpty()){
         return res.status(400).json({Errors: errors.array()})
     }
-    next()
+    return next()
 }
 
 const validateUserAsync = async (req,res) => {
