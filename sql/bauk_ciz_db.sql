@@ -1,5 +1,12 @@
 
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema bauk_ciz_db
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
 -- Schema bauk_ciz_db
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `bauk_ciz_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
@@ -13,7 +20,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`addition` (
   `Name` VARCHAR(45) NOT NULL,
   `Price` DOUBLE NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -23,7 +31,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order_status` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -33,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdOrderStatus` INT NOT NULL,
   `Price` DOUBLE NOT NULL,
+  `Description` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE,
   INDEX `Order-StatusOrder_idx` (`IdOrderStatus` ASC) VISIBLE,
@@ -40,7 +50,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order` (
     FOREIGN KEY (`IdOrderStatus`)
     REFERENCES `bauk_ciz_db`.`order_status` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -51,7 +62,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`picture` (
   `Name` VARCHAR(45) NOT NULL,
   `File_Path` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -70,7 +82,40 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`product` (
     FOREIGN KEY (`IdPicture`)
     REFERENCES `bauk_ciz_db`.`picture` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
+
+
+-- -----------------------------------------------------
+-- Table `bauk_ciz_db`.`size`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`size` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Size` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+AUTO_INCREMENT = 0;
+
+
+-- -----------------------------------------------------
+-- Table `bauk_ciz_db`.`product_size`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`product_size` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `IdProduct` INT NOT NULL,
+  `IdSize` INT NOT NULL,
+  `Price` DOUBLE NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE,
+  INDEX `P_S-Product_idx` (`IdProduct` ASC) VISIBLE,
+  INDEX `P_S-Size_idx` (`IdSize` ASC) VISIBLE,
+  CONSTRAINT `P_S-Product`
+    FOREIGN KEY (`IdProduct`)
+    REFERENCES `bauk_ciz_db`.`product` (`ID`),
+  CONSTRAINT `P_S-Size`
+    FOREIGN KEY (`IdSize`)
+    REFERENCES `bauk_ciz_db`.`size` (`ID`))
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -80,12 +125,13 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`item` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdProduct` INT NOT NULL,
   `IdOrder` INT NOT NULL,
+  `IdSize` INT NOT NULL,
   `Price` DOUBLE NOT NULL,
   `Comments` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE,
   INDEX `Item-Order_idx` (`IdOrder` ASC) VISIBLE,
   INDEX `Item-Product_idx` (`IdProduct` ASC) VISIBLE,
+  INDEX `Item-ProductSize_idx` (`IdSize` ASC) VISIBLE,
   CONSTRAINT `Item-Order`
     FOREIGN KEY (`IdOrder`)
     REFERENCES `bauk_ciz_db`.`order` (`ID`)
@@ -95,7 +141,11 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`item` (
     FOREIGN KEY (`IdProduct`)
     REFERENCES `bauk_ciz_db`.`product` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE,
+  CONSTRAINT `Item-ProductSize`
+    FOREIGN KEY (`IdSize`)
+    REFERENCES `bauk_ciz_db`.`product_size` (`ID`))
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -116,7 +166,10 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`additions` (
     ON UPDATE CASCADE,
   CONSTRAINT `Additions-item`
     FOREIGN KEY (`IdItem`)
-    REFERENCES `bauk_ciz_db`.`item` (`ID`));
+    REFERENCES `bauk_ciz_db`.`item` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -128,7 +181,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`place` (
   `AreaCode` VARCHAR(45) NOT NULL,
   `Active` TINYINT NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -138,7 +192,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`role` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `RoleName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -148,7 +203,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`status` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Status` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -177,13 +233,14 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`user` (
     FOREIGN KEY (`IdStatus`)
     REFERENCES `bauk_ciz_db`.`status` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`adress`
+-- Table `bauk_ciz_db`.`address`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`adress` (
+CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`address` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdUser` VARCHAR(45) NOT NULL,
   `StreetAndNumber` VARCHAR(80) NOT NULL,
@@ -202,7 +259,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`adress` (
     FOREIGN KEY (`IdUser`)
     REFERENCES `bauk_ciz_db`.`user` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -221,7 +279,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`auth` (
     FOREIGN KEY (`IdUser`)
     REFERENCES `bauk_ciz_db`.`user` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -238,7 +297,9 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`chat` (
     FOREIGN KEY (`IdUser`)
     REFERENCES `bauk_ciz_db`.`user` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+;
+
 
 -- -----------------------------------------------------
 -- Table `bauk_ciz_db`.`mail_code`
@@ -255,30 +316,32 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`mail_code` (
     FOREIGN KEY (`IdUser`)
     REFERENCES `bauk_ciz_db`.`user` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
--- Table `bauk_ciz_db`.`order_adress`
+-- Table `bauk_ciz_db`.`order_address`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order_adress` (
+CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order_address` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdOrder` INT NOT NULL,
-  `IdAdress` INT NOT NULL,
+  `IdAddress` INT NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE,
-  INDEX `O_A_idx` (`IdOrder` ASC) VISIBLE,
-  INDEX `O_A_idx1` (`IdAdress` ASC) VISIBLE,
-  CONSTRAINT `O_A-Adress`
-    FOREIGN KEY (`IdAdress`)
-    REFERENCES `bauk_ciz_db`.`adress` (`ID`)
+  UNIQUE INDEX `IdOrder_UNIQUE` (`IdOrder` ASC) VISIBLE,
+  UNIQUE INDEX `IdAddress_UNIQUE` (`IdAddress` ASC) VISIBLE,
+  CONSTRAINT `O_A-Address`
+    FOREIGN KEY (`IdAddress`)
+    REFERENCES `bauk_ciz_db`.`address` (`ID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `O_A-Order`
     FOREIGN KEY (`IdOrder`)
     REFERENCES `bauk_ciz_db`.`order` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -301,7 +364,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`order_user` (
     FOREIGN KEY (`IdUser`)
     REFERENCES `bauk_ciz_db`.`user` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -312,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`visit` (
   `Date` DATE NOT NULL,
   `IdPlace` INT NOT NULL,
   `SlotsNumber` INT NOT NULL,
-  `Price` DOUBLE NOT NULL,
+  `Price` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE,
   INDEX `Visit-Place_idx` (`IdPlace` ASC) VISIBLE,
@@ -320,7 +384,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`visit` (
     FOREIGN KEY (`IdPlace`)
     REFERENCES `bauk_ciz_db`.`place` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -343,7 +408,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`orders` (
     FOREIGN KEY (`IdVisit`)
     REFERENCES `bauk_ciz_db`.`visit` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -362,7 +428,8 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`password` (
     FOREIGN KEY (`IdUser`)
     REFERENCES `bauk_ciz_db`.`user` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
 
 
 -- -----------------------------------------------------
@@ -385,20 +452,5 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`product_addition` (
     FOREIGN KEY (`IdProduct`)
     REFERENCES `bauk_ciz_db`.`product` (`ID`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE);
-
-
--- -----------------------------------------------------
--- Table `bauk_ciz_db`.`size`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`size` (
-  `ID` INT NOT NULL AUTO_INCREMENT,
-  `Size` VARCHAR(45) NOT NULL,
-  `Price` DOUBLE NOT NULL,
-  `IdProduct` INT NOT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE,
-  INDEX `Size-Product_idx` (`IdProduct` ASC) VISIBLE,
-  CONSTRAINT `Size-Product`
-    FOREIGN KEY (`IdProduct`)
-    REFERENCES `bauk_ciz_db`.`product` (`ID`));
+    ON UPDATE CASCADE)
+AUTO_INCREMENT = 0;
