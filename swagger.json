@@ -147,6 +147,143 @@
                 }
             }
         },
+        "/users/":{
+            "delete":{
+                "security": [
+                    {
+                        "BearerAuth":[],
+                        "AppiId":[]
+                    }
+                ],
+                "description":"Delete yourself with bearer auth",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "400":{
+                        "description": "Bad request"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "$ref" : "#/components/schemas/GetUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}":{
+            "delete":{
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "description":"Delete use by ID",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "400":{
+                        "description": "Bad request"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "$ref" : "#/components/schemas/GetUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/addresses":{
+            "get":{
+                "security": [
+                    {
+                        "AppiId":[],
+                        "BearerAuth":[]
+                    }
+                ],
+                "description": "Get addresses",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/GetAdresses"
+                                }
+                            }
+                        }
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/users/places":{
+            "get":{
+                "security": [
+                    {
+                        "AppiId":[],
+                        "BearerAuth":[]
+                    }
+                ],
+                "description": "Get addresses",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/GetPlaces"
+                                }
+                            }
+                        }
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/authorization/loginEmail":{
             "post":{
                 "security": [
@@ -777,6 +914,109 @@
                     }
                 }
             }
+        },
+        "/products/{id}":{
+            "get":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "Get products by id",
+                "tags": [
+                    "Products"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/products/":{
+            "get":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "description": "Get products",
+                "tags": [
+                    "Products"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/products":{
+            "post":{
+                "security": [
+                    {
+                        "AppiId":[],
+                        "BearerAuth":[]
+                    }
+                ],
+                "description": "Post products",
+                "requestBody":{
+                    "content":{
+                        "Application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/PostProduct"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Products"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    },
+                    "401":{
+                        "description": "Unauthorizaiton"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -916,10 +1156,10 @@
                         "type": "string"
                     },
                     "IdStatus":{
-                        "type": "string"
+                        "type": "integer"
                     },
                     "IdRole":{
-                        "type": "string"
+                        "type": "integer"
                     },
                     "Password":{
                         "type": "string"
@@ -1171,6 +1411,32 @@
                     }
                 }
             },
+            "GetPlaces":{
+                "type": "array",
+                "items":{
+                    "type": "object",
+                    "required": [
+                        "ID",
+                        "PlaceName",
+                        "AreaCode",
+                        "Active"
+                    ],
+                    "properties": {
+                        "ID":{
+                            "type": "integer"
+                        },
+                        "PlaceName":{
+                            "type": "string"
+                        },
+                        "AreaCode":{
+                            "type": "string"
+                        },
+                        "Active":{
+                            "type": "boolean"
+                        }
+                    }
+                }
+            },
             "DeleteUser":{
              "type": "object",
              "required": [
@@ -1283,6 +1549,98 @@
                         "type": "string"
                     }
                 } 
+            },
+            "Product":{
+                "type": "object",
+                "properties": {
+                    "ID":{
+                        "type": "integer"
+                    },
+                    "Name":{
+                        "type": "string"
+                    },
+                    "Available":{
+                        "type": "boolean"
+                    },
+                    "Description":{
+                        "type": "string"
+                    },
+                    "File_Path":{
+                        "type": "string"
+                    },
+                    "Size":{
+                        "type":"array",
+                        "items":{
+                            "properties":{
+                                "ID":{
+                                    "type":"integer"
+                                },
+                                "Size":{
+                                    "type":"string"
+                                },
+                                "Price":{
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "Additions":{
+                        "type":"array",
+                        "items":{
+                            "properties":{
+                                "ID":{
+                                    "type":"integer"
+                                },
+                                "Name":{
+                                    "type":"string"
+                                },
+                                "Price":{
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "PostProduct":{
+                "type": "object",
+                "properties": {
+                    "IdPicture":{
+                        "type": "integer"
+                    },
+                    "Name":{
+                        "type": "string"
+                    },
+                    "Description":{
+                        "type": "string"
+                    },
+                    "Available":{
+                        "type": "boolean"
+                    },
+                    "Sizes":{
+                        "type":"array",
+                        "items":{
+                            "properties":{
+                                "IdSize":{
+                                    "type":"integer"
+                                },
+                                "Price":{
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "Additions":{
+                        "type":"array",
+                        "items":{
+                            "properties":{
+                                "IdAddition":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

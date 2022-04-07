@@ -5,12 +5,15 @@ import * as userSchema from '../middleware/validationSchema.js'
 
 const router = express.Router()
 
-router.get('/:id', async(req,res)=>{
+router.get('/:id',
+async(req,res)=>{
     const result=await productRepo.getProduct(req.params.id)
+    if(result==null) return res.sendStatus(204)
     return res.status(200).send(result)
 })
 
-router.get('/', async(req,res)=>{
+router.get('/',
+async(req,res)=>{
     const result=await productRepo.getProducts()
     return res.status(200).send(result)
 })

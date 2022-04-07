@@ -22,21 +22,25 @@ router.get('/', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyU
 router.get('/addresses', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAsync,
     async (req,res)=>{
         let result=await userRepo.getAddressesOfUserAsync(req.user.ID)
-        res.status(200).json(result)
+        return res.status(200).send(result)
 })
 
-router.get('/places', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken,
+router.get('/places', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAsync,
     async (req,res)=>{
         let result=await userRepo.getPlacesAsync()
-        res.status(200).json(result)
+        return res.status(200).send(result)
 })
 
 router.delete('/', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken,
     async (req,res)=>{
-        if(!(await userRepo.checkID(req.user.ID)))
-            return res.status(401).send('You are not authorize')
         const result=await userRepo.deleteUserAsync(req.user.ID)
-        return result.affectedRows!==0 ? res.status(202).send({message: 'Account deleted'}) : res.sendStatus(204)
+        return result.affectedRows!==0 ? res.sendStatus(202) : res.sendStatus(204)
+})
+
+router.delete('/{id}', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync,
+    async (req,res)=>{
+        const result=await userRepo.deleteUserAsync(req.params.id)
+        return result.affectedRows!==0 ? res.sendStatus(202) : res.sendStatus(204)
 })
 
 router.put('/', userSchema.userEditSchema, auth.validateInput, auth.verifyUserToken,

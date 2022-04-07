@@ -44,7 +44,7 @@ const getUserById=async(id)=>{
 
 const getAddressesOfUserAsync=async(id)=>{
     const sql=sqlQueries.getItemsByConditions(
-        'a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.Active',
+        'a.ID, a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.AreaCode, p.Active',
         `${tables.addressTable} a , ${tables.placeTable} p`,
         `a.IdUser = ? AND a.IdPlace=p.ID`
     )
