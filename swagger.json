@@ -145,9 +145,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/users/":{
+            },
             "delete":{
                 "security": [
                     {
@@ -182,23 +180,27 @@
                 }
             }
         },
-        "/users/{id}":{
+        "/users/auth":{
             "delete":{
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "schema":{
-                            "type": "string"
-                        },
-                        "required": true
-                    }
-                ],
                 "security": [
                     {
+                        "BearerAuth":[],
                         "AppiId":[]
                     }
                 ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "properties": {
+                                    "ID" :{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "description":"Delete use by ID",
                 "tags": [
                     "Users"
@@ -779,9 +781,47 @@
                         "description": "Unauthorize"
                     }
                 }
+            },
+            "put":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "Put visit",
+                "tags": [
+                    "Visits"
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/PostVisit"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201":{
+                        "description": "Created"
+                    },
+                    "401":{
+                        "description": "Unauthorize"
+                    }
+                }
             }
         },
-        "/visits":{
+        "/visits/":{
             "get":{
                 "security": [
                     {
@@ -810,9 +850,7 @@
                         "description": "Unauthorize"
                     }
                 }
-            }
-        },
-        "/visits/":{
+            },
             "post":{
                 "security": [
                     {
@@ -861,46 +899,6 @@
                                 "items":{
                                     "$ref":"#/components/schemas/PostVisit"
                                 }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201":{
-                        "description": "Created"
-                    },
-                    "401":{
-                        "description": "Unauthorize"
-                    }
-                }
-            }
-        },
-        "/visits/{vId}":{
-            "put":{
-                "security": [
-                    {
-                        "AppiId":[]
-                    }
-                ],
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "vId",
-                        "schema":{
-                            "type": "integer"
-                        },
-                        "required": true
-                    }
-                ],
-                "description": "Put visit",
-                "tags": [
-                    "Visits"
-                ],
-                "requestBody":{
-                    "content": {
-                        "Application/json":{
-                            "schema":{
-                                "$ref":"#/components/schemas/PostVisit"
                             }
                         }
                     }
@@ -982,9 +980,7 @@
                         "description": "No Content"
                     }
                 }
-            }
-        },
-        "/products":{
+            },
             "post":{
                 "security": [
                     {
@@ -1014,6 +1010,360 @@
                     },
                     "401":{
                         "description": "Unauthorizaiton"
+                    }
+                }
+            }
+        },
+        "/sizes/":{
+            "post":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Size"
+                            }
+                        }
+                    }
+                },
+                "description": "Get products",
+                "tags": [
+                    "Sizes"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/sizes/{id}":{
+            "put":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Size"
+                            }
+                        }
+                    }
+                },
+                "description": "Get products",
+                "tags": [
+                    "Sizes"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/sizes/multi":{
+            "post":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "type": "array",
+                                "items":{
+                                    "$ref":"#/components/schemas/Size"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Get products",
+                "tags": [
+                    "Sizes"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/additions/":{
+            "get":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "description": "Get additions",
+                "tags": [
+                    "Additions"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            },
+            "post":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Addition"
+                            }
+                        }
+                    }
+                },
+                "description": "Post additions",
+                "tags": [
+                    "Additions"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/additions/{id}":{
+            "get":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "Get addition",
+                "tags": [
+                    "Additions"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            },
+            "put":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Addition"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "Get addition",
+                "tags": [
+                    "Additions"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/additions/multi":{
+            "post":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "type": "array",
+                                "items":{
+                                    "$ref": "#/components/schemas/Addition"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Post additions",
+                "tags": [
+                    "Additions"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/orders/{id}":{
+            "get":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "Get addition",
+                "tags": [
+                    "Orders"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            },
+            "put":{
+                "security": [
+                    {
+                        "AppiId":[]
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Addition"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema":{
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "Get addition",
+                "tags": [
+                    "Additions"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/orders/":{
+            "post":{
+                "security": [
+                    {
+                        "AppiId":[],
+                        "BearerAuth":[]
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Addition"
+                            }
+                        }
+                    }
+                },
+                "description": "Post additions",
+                "tags": [
+                    "Additions"
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    },
+                    "204":{
+                        "description": "No Content"
                     }
                 }
             }
@@ -1639,6 +1989,25 @@
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "Size":{
+                "type": "object",
+                "properties": {
+                    "Size":{
+                        "type": "string"
+                    }
+                }
+            },
+            "Addition":{
+                "type": "object",
+                "properties": {
+                    "Name":{
+                        "type": "string"
+                    },
+                    "Price":{
+                        "type": "integer"
                     }
                 }
             }

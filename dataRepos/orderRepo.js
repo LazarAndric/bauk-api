@@ -16,8 +16,8 @@ const getOrder=async(id)=>{
     sql=sqlQueries.getItemsByConditions('i.ID, i.Price, i.Comments, p.Name, p.Available, p.Description, pi.File_Path, ps.Price, s.Size',
     `${itemTables.itemTable} i, ${productTables.productTable} p, ${productTables.pictureTable} pi, ${productTables.productSizeTable} ps, ${productTables.sizeTable} s`,
     'i.IdOrder=? AND i.IdProduct=p.ID AND p.IdPicture=pi.ID AND i.IdSize=ps.ID AND ps.IdSize=s.ID')
-   order.Items=await queryWithData(sql, id)
-
+    result=await queryWithData(sql, id)
+    order.Items=result
     for(let item of order.Items)
     {
         sql=sqlQueries.getItemsByConditions('a.ID, a.Name, a.Price',

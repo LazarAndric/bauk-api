@@ -112,4 +112,4 @@ const postVisits=[
     body('*.SlotsNumber').exists('checkNull')
 ]
 
-export {postVisits, postVisit, postAddition, postAdditions, postSizes,postSize, postProduct, postPlace, userSchema, emailVerifyCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}
+export {postVisits, postVisit, postAddition, postAdditions, postSizes, postSize, postProduct, postPlace, userSchema, emailVerifyCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}

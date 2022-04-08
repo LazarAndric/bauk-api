@@ -52,7 +52,10 @@ const getAddressesOfUserAsync=async(id)=>{
 }
 
 const getPlacesAsync=async(id)=>{
-    const sql=sqlQueries.getItems('*',tables.placeTable)
+    const sql=sqlQueries.getItemsByConditions(
+        'p.PlaceName, p.AreaCode, p.Active',
+        `${tables.addressTable} a , ${tables.placeTable} p`,
+        `a.IdUser = ? AND a.IdPlace=p.ID`)
     return await queryWithData(sql, id)
 }
 

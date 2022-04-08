@@ -27,7 +27,7 @@ router.get('/addresses', userSchema.auhorizedUserSchema, auth.validateInput, aut
 
 router.get('/places', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAsync,
     async (req,res)=>{
-        let result=await userRepo.getPlacesAsync()
+        let result=await userRepo.getPlacesAsync(req.user.ID)
         return res.status(200).send(result)
 })
 
@@ -37,9 +37,9 @@ router.delete('/', userSchema.auhorizedUserSchema, auth.validateInput, auth.veri
         return result.affectedRows!==0 ? res.sendStatus(202) : res.sendStatus(204)
 })
 
-router.delete('/{id}', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync,
+router.delete('/auth', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync,
     async (req,res)=>{
-        const result=await userRepo.deleteUserAsync(req.params.id)
+        const result=await userRepo.deleteUserAsync(req.body.ID)
         return result.affectedRows!==0 ? res.sendStatus(202) : res.sendStatus(204)
 })
 

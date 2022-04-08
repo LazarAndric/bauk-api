@@ -15,7 +15,6 @@ router.get('/', async(req,res)=>{
     return res.status(200).send(result)
 })
 
-//NO AUTH
 router.post('/', validationSchema.postAddition, auth.validateInput, async(req,res)=>{
     await additionRepo.postAddition(req.body)
     return res.status(200).send('Created')
