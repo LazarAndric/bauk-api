@@ -9,7 +9,7 @@ import * as productTables from '../sql/sqlTables/sqlProductTables.js'
 const getOrder=async(id)=>{
     let sql=sqlQueries.getItemsByConditions('o.ID, os.Name, o.Price, o.Description, a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.AreaCode, p.Active',
     `${orderTables.orderTable} o, ${orderTables.orderStatusTable} os, ${orderTables.orderAddressTable} oa, ${userTables.addressTable} a, ${userTables.placeTable} p`,
-    'o.ID=? AND o.IdOrderStatus=os.ID AND o.ID =oa.IdOrder AND oa.IdAddress=a.ID AND a.IdPlace=p.ID')
+    'o.ID=? AND oa.IdOrder= o.ID AND a.ID=oa.IdAddress AND p.ID=a.IdPlace AND os.ID=o.IdOrderStatus')
     let result=await queryWithData(sql, id)
     let order=Object
     order=result[0]
@@ -47,6 +47,15 @@ const postAddress=async(address)=>{
 //     }
 //     return result
 // }
+const postStatus=async(status)=>{
+    let sql=sqlQueries.setItem(orderTables.orderStatusTable)
+    return await queryWithData(sql, status)
+}
+
+const getStatus=async()=>{
+    let sql=sqlQueries.getItems('*', orderTables.orderStatusTable)
+    return await queryWithoutData(sql)
+}
 
 const postOrder=async(order)=>{
     let sql=sqlQueries.setItem(orderTables.orderTable)
@@ -99,4 +108,4 @@ const postUsersTable=async(orderUser)=>{
     return await queryWithData(sql, orderUser)
 }
 
-export {postUsersTable, postOrdersTable, getVisitByAddress, putVisit, postAddress, postAddition, postItem, postAdditions, getOrder, postOrder, putOrder, postOrders}
+export {postStatus, getStatus, postUsersTable, postOrdersTable, getVisitByAddress, putVisit, postAddress, postAddition, postItem, postAdditions, getOrder, postOrder, putOrder, postOrders}

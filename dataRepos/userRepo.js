@@ -59,6 +59,32 @@ const getPlacesAsync=async(id)=>{
     return await queryWithData(sql, id)
 }
 
+const getRoles=async()=>{
+    const sql=sqlQueries.getItems(
+        '*', tables.roleTable)
+    return await queryWithData(sql)
+}
+
+const getStatus=async()=>{
+    const sql=sqlQueries.getItems(
+        '*', tables.statusTable)
+    return await queryWithData(sql)
+}
+
+const postRoles=async(roles)=>{
+    let keys=Object.keys(roles[0])
+    const sql =sqlQueries.setItems(tables.roleTable, keys)
+    let value=roles.map(obj=> keys.map(key=> obj[key]))
+    return await queryWithData(sql, [value])
+}
+
+const postStatus=async(status)=>{
+    let keys=Object.keys(status[0])
+    const sql =sqlQueries.setItems(tables.statusTable, keys)
+    let value=status.map(obj=> keys.map(key=> obj[key]))
+    return await queryWithData(sql, [value])
+}
+
 const setUserAsync=async(user)=>{
     const sql= sqlQueries.setItem(tables.userTable)
     return await queryWithData(sql, user)
@@ -111,6 +137,6 @@ const getUserByPhoneNumber=(phoneNumber)=>{
     
 }
 
-export {getUsersAsync, setUserAsync, getUserById, deleteUserAsync, putUserAsync,
+export {postRoles, postStatus, getStatus, getRoles, getUsersAsync, setUserAsync, getUserById, deleteUserAsync, putUserAsync,
     getUserByPhoneNumber, getUserIdByEmail, checkEmail, postAddressAsync,
     checkID, checAdminkID, getAddressesOfUserAsync, getPlacesAsync}

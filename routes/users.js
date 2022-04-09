@@ -25,6 +25,30 @@ router.get('/addresses', userSchema.auhorizedUserSchema, auth.validateInput, aut
         return res.status(200).send(result)
 })
 
+router.get('/roles',
+    async (req,res)=>{
+        let result=await userRepo.getRoles()
+        return res.status(200).send(result)
+})
+
+router.post('/roles',
+    async (req,res)=>{
+        let result=await userRepo.postRoles(req.body)
+        return res.sendStatus(201)
+})
+
+router.get('/status',
+    async (req,res)=>{
+        let result=await userRepo.getStatus()
+        return res.status(200).send(result)
+})
+
+router.post('/status',
+    async (req,res)=>{
+        let result=await userRepo.postStatus(req.body)
+        return res.sendStatus(201)
+})
+
 router.get('/places', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAsync,
     async (req,res)=>{
         let result=await userRepo.getPlacesAsync(req.user.ID)

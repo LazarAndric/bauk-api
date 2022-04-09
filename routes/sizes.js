@@ -15,7 +15,7 @@ router.get('/', async(req,res)=>{
     return res.status(200).send(result)
 })
 
-router.post('/', validationSchema.postSize, auth.validateInput, auth.verifyUserAdminAsync, async(req,res)=>{
+router.post('/', validationSchema.postSize, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync, async(req,res)=>{
     await sizeRepo.postSize(req.body)
     return res.status(200).send('Created')
 })

@@ -2,6 +2,7 @@ import express from 'express'
 import * as orderRepo from '../dataRepos/orderRepo.js'
 import * as productRepo from '../dataRepos/productRepo.js'
 import * as userRepo from '../dataRepos/userRepo.js'
+import * as visitRepo from '../dataRepos/visitRepo.js'
 import * as auth from '../middleware/authorizationMiddleware.js'
 import * as validationSchema from '../middleware/validationSchema.js'
 
@@ -19,11 +20,13 @@ router.get('/:id', async(req,res)=>{
 
 // //NO AUTH
 router.post('/', validationSchema.orders, auth.validateInput, auth.verifyUserToken, async(req,res)=>{
+    const visit=await visitRepo.isAddressExist(req.body.IdVisit,req.body.IdAddress, req.user.ID)
+    if(visit) return res.sendStatus(404)
     const product=await productRepo.getProduct(req.body.Items[0].IdProduct)
     req.body.Comments=product.Name + ", " + product.Description
     const idVisit=await orderRepo.getVisitByAddress(req.body.IdAddress)
     const result=await orderRepo.postOrder({
-        IdOrderStatus:1,
+        IdOrderStatus:req.body.IdOrderStatus,
         Price:req.body.Price,
         Description:req.body.Comments
     })
@@ -57,7 +60,6 @@ router.post('/', validationSchema.orders, auth.validateInput, auth.verifyUserTok
     }
     return res.status(200).send('Created')
 })
-
 // router.post('/multi', validationSchema.postSizes, auth.validateInput, async(req,res)=>{
 //     const result=await orderRepo.postVisits(req.body)
 //     return res.status(200).send('Created')

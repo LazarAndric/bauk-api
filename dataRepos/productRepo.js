@@ -25,7 +25,7 @@ const getProducts=async()=>{
     const data=await queryWithoutData(sql)
     for(const product of data){
         product.Available= product.Available==1 ? true : false
-        sql=sqlQueries.getItemsByConditions('s.ID, s.Size, ps.Price',
+        sql=sqlQueries.getItemsByConditions('ps.ID, s.Size, ps.Price',
         `${productTables.sizeTable} s, ${productTables.productSizeTable} ps`, 'ps.IdProduct= ? AND ps.IdSize=s.ID')
         product.Size = await queryWithData(sql, product.ID)
         sql=sqlQueries.getItemsByConditions('a.ID, a.Name, a.Price', `${productTables.additionTable} a, ${productTables.productAdditionTable} pa`,
@@ -38,6 +38,18 @@ const getProducts=async()=>{
 const postProduct=async(product)=>{
     let sql=sqlQueries.setItem(productTables.productTable)
     return await queryWithData(sql, product)
+}
+
+const getPictures=async()=>{
+    let sql=sqlQueries.getItems('*',productTables.pictureTable)
+    return await queryWithoutData(sql)
+}
+
+const postPictures=async(pictures)=>{
+    const keys=Object.keys(pictures[0])
+    const values=pictures.map(obj=> keys.map(key=> obj[key]))
+    let sql=sqlQueries.setItems(productTables.pictureTable, keys)
+    return await queryWithData(sql, [values])
 }
 
 const postSizes=async(sizes)=>{
@@ -54,4 +66,4 @@ const postAdditions=async(additions)=>{
     return await queryWithData(sql, [values])
 }
 
-export { getProduct, postProduct, postSizes, postAdditions, getProducts}
+export {getPictures, postPictures, getProduct, postProduct, postSizes, postAdditions, getProducts}

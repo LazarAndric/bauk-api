@@ -20,7 +20,7 @@ router.get('/:id', async (req,res)=>{
 router.post('/', async (req,res)=>{
         req.body.Active=1
         let result=await placeRepo.postPlaceAsync(req.body)
-        res.status(200).json(result)
+        res.sendStatus(200)
 })
 
 router.delete('/:id', auth.verifyUserToken, auth.verifyUserAdminAsync, async (req,res)=>{

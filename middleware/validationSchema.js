@@ -68,6 +68,11 @@ const postPlace=[
     body('AreaCode').exists('checkNull')
 ]
 
+const pictures=[
+    body('Name').exists('checkNull'),
+    body('File_Path').exists('checkNull')
+]
+
 const postProduct=[
     body('IdPicture').exists('checkNull'),
     body('Name').exists('checkNull'),
@@ -101,7 +106,7 @@ const postAdditions=[
 ]
 
 const postVisit=[
-    body('Date').isDate('DD/MM/YYYY/').exists('checkNull'),
+    body('Date').isDate('YYYY-MM-DD').exists('checkNull'),
     body('IdPlace').exists('checkNull'),
     body('SlotsNumber').exists('checkNull')
 ]
@@ -125,4 +130,4 @@ const orders=[
     body('Items.*.Additions.*.ID').isInt().exists('checkNull')
 
 ]
-export {orders, postVisits, postVisit, postAddition, postAdditions, postSizes, postSize, postProduct, postPlace, userSchema, emailVerifyCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}
+export {pictures, orders, postVisits, postVisit, postAddition, postAdditions, postSizes, postSize, postProduct, postPlace, userSchema, emailVerifyCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}

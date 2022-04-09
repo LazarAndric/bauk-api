@@ -17,6 +17,12 @@ const getVisit=async(id)=>{
     return result
 }
 
+const isAddressExist=async(visitId, addressId, userId)=>{
+    let sql=sqlQueries.checkItem(`${orderTables.orderAddressTable} oa, ${visitTables.ordersTable} os,  ${orderTables.orderUserTable} ou`, 'os.IdVisit=? AND ((os.IdOrder=oa.IdOrder AND oa.IdAddress=?) OR (os.IdOrder=ou.IdOrder AND ou.IdUser=?))')
+    const result= await queryWithData(sql,[visitId, addressId, userId])
+    return Object.values(result[0]).at(0)==1
+}
+
 const getVisits=async()=>{
     let sql=sqlQueries.getItemsByConditions('v.ID, v.Date, v.SlotsNumber, v.Price, p.PlaceName, p.AreaCode, p.Active',
     `${visitTables.placeTable} p, ${visitTables.visitTable} v`,
@@ -24,9 +30,9 @@ const getVisits=async()=>{
     let result= await queryWithoutData(sql)
     for(let res of result)
     {
-        sql=sqlQueries.getItemsByConditions('o.ID, o.Price, o.Description, os.Name, u.FirstName, u.LastName, u.PhoneNumber, u.Email',
-        `${visitTables.ordersTable} vo, ${orderTables.orderTable} o, ${orderTables.orderUserTable} ou, ${orderTables.userTable} u, ${orderTables.orderStatusTable} os`,
-        'vo.IdVisit=? AND vo.IdOrder=o.ID AND o.IdOrderStatus=os.ID AND o.ID=ou.IdOrder AND ou.IdUser=u.ID')
+        sql=sqlQueries.getItemsByConditions('o.ID, o.Price, o.Description, os.Name, u.FirstName, u.LastName, u.PhoneNumber, u.Email, a.StreetAndNumber, a.GpsLocation',
+        `${visitTables.ordersTable} vo, ${orderTables.orderTable} o, ${orderTables.orderUserTable} ou, ${orderTables.userTable} u, ${orderTables.orderStatusTable} os,  ${orderTables.orderAddressTable} oa,  ${visitTables.addresssTable} a`,
+        'vo.IdVisit=? AND vo.IdOrder=o.ID AND o.IdOrderStatus=os.ID AND o.ID=ou.IdOrder AND ou.IdUser=u.ID AND o.ID=oa.IdOrder AND oa.IdAddress=a.ID')
         res.Orders=await queryWithData(sql, res.ID)
     }
     return result
@@ -34,9 +40,9 @@ const getVisits=async()=>{
 
 const postVisit=async(visit)=>{
     let sql=sqlQueries.updateItem(visitTables.placeTable, 'ID=?')
-    await queryWithData(sql, [{Active: true}, visit.PlaceId])
+    await queryWithData(sql, [{Active: true}, visit.IdPlace])
     sql=sqlQueries.setItem(visitTables.visitTable)
-    return await queryWithData(sql, {Date: visit.Date, IdPlace: visit.Place, SlotsNumber: visit.SlotsNumber, Price: 0})
+    return await queryWithData(sql, {Date: visit.Date, IdPlace: visit.IdPlace, SlotsNumber: visit.SlotsNumber, Price: 0})
 }
 
 const postVisits=async(visits)=>{
@@ -51,4 +57,4 @@ const putVisit=async(visit, id)=>{
     return await queryWithData(sql, [visit, id])
 }
 
-export { getVisit, postVisit, putVisit, postVisits, getVisits}
+export {isAddressExist, getVisit, postVisit, putVisit, postVisits, getVisits}

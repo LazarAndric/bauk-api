@@ -32,14 +32,14 @@ async(req,res)=>{
     {
         size.IdProduct=result.insertId
     }
-    await productRepo.postSizes(req.body.Sizes)
+    let value=await productRepo.postSizes(req.body.Sizes)
     
     for(const addition of req.body.Additions)
     {
         addition.IdProduct=result.insertId
     }
     
-    await productRepo.postAdditions(req.body.Additions)
+    value=await productRepo.postAdditions(req.body.Additions)
 
     return res.status(200).send('Created')
 })

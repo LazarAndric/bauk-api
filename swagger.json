@@ -1,60 +1,60 @@
-{ 
-    "openapi" : "3.0.3",
-    "info" : {
-        "title" : "Bauk Cheescake",
-        "version" : "0.0.11",
-        "description" : "appiid: 3232f21e-653e-4e98-b46d-c34cbc751182"
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Bauk Cheescake",
+        "version": "0.0.11",
+        "description": "appiid: 3232f21e-653e-4e98-b46d-c34cbc751182"
     },
-    "servers":[
+    "servers": [
         {
             "url": "http://localhost:5000"
         }
     ],
     "security": [
         {
-            "BearerAuth":[],
-            "Refresh":[],
-            "ChangePassword":[],
-            "AppiId":[]
+            "BearerAuth": [],
+            "Refresh": [],
+            "ChangePassword": [],
+            "AppiId": []
         }
     ],
     "paths": {
-        "/users/all":{
-            "get":{
+        "/users/all": {
+            "get": {
                 "security": [
                     {
-                        "BearerAuth":[],
-                        "AppiId":[]
+                        "BearerAuth": [],
+                        "AppiId": []
                     }
                 ],
-                "description":"Get all users. Need jwt authorization",
+                "description": "Get all users. Need jwt authorization",
                 "tags": [
                     "Users"
                 ],
                 "responses": {
-                    "400":{
+                    "400": {
                         "description": "Bad request",
                         "content": {
-                            "application/json":{
-                                "schema":{
+                            "application/json": {
+                                "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "Errors":{
+                                        "Errors": {
                                             "type": "array",
-                                            "items":{
+                                            "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "msg":{
-                                                        "type":"string",
-                                                        "example":"Invalid value"
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
                                                     },
-                                                    "param":{
-                                                        "type":"string",
-                                                        "example":"authorization"
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "authorization"
                                                     },
-                                                    "location":{
-                                                        "type":"string",
-                                                        "example":"headers"
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "headers"
                                                     }
                                                 }
                                             }
@@ -64,18 +64,18 @@
                             }
                         }
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorized"
                     },
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "application/json":{
-                                "schema":{
-                                    "$ref" : "#/components/schemas/GetUser"
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetUser"
                                 }
                             }
                         }
@@ -83,42 +83,42 @@
                 }
             }
         },
-        "/users":{
-            "get":{
+        "/users": {
+            "get": {
                 "security": [
                     {
-                        "BearerAuth":[],
-                        "AppiId":[]
+                        "BearerAuth": [],
+                        "AppiId": []
                     }
                 ],
-                "description":"Get user by jwt token. Need jwt authorization",
+                "description": "Get user by jwt token. Need jwt authorization",
                 "tags": [
                     "Users"
                 ],
                 "responses": {
-                    "400":{
+                    "400": {
                         "description": "Bad request",
                         "content": {
-                            "application/json":{
-                                "schema":{
+                            "application/json": {
+                                "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "Errors":{
+                                        "Errors": {
                                             "type": "array",
-                                            "items":{
+                                            "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "msg":{
-                                                        "type":"string",
-                                                        "example":"Invalid value"
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
                                                     },
-                                                    "param":{
-                                                        "type":"string",
-                                                        "example":"authorization"
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "authorization"
                                                     },
-                                                    "location":{
-                                                        "type":"string",
-                                                        "example":"headers"
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "headers"
                                                     }
                                                 }
                                             }
@@ -128,51 +128,51 @@
                             }
                         }
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorized"
                     },
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "application/json":{
-                                "schema":{
-                                    "$ref" : "#/components/schemas/GetUser"
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetUser"
                                 }
                             }
                         }
                     }
                 }
             },
-            "delete":{
+            "delete": {
                 "security": [
                     {
-                        "BearerAuth":[],
-                        "AppiId":[]
+                        "BearerAuth": [],
+                        "AppiId": []
                     }
                 ],
-                "description":"Delete yourself with bearer auth",
+                "description": "Delete yourself with bearer auth",
                 "tags": [
                     "Users"
                 ],
                 "responses": {
-                    "400":{
+                    "400": {
                         "description": "Bad request"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorized"
                     },
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "application/json":{
-                                "schema":{
-                                    "$ref" : "#/components/schemas/GetUser"
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetUser"
                                 }
                             }
                         }
@@ -180,20 +180,20 @@
                 }
             }
         },
-        "/users/auth":{
-            "delete":{
+        "/users/auth": {
+            "delete": {
                 "security": [
                     {
-                        "BearerAuth":[],
-                        "AppiId":[]
+                        "BearerAuth": [],
+                        "AppiId": []
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
+                        "Application/json": {
+                            "schema": {
                                 "properties": {
-                                    "ID" :{
+                                    "ID": {
                                         "type": "string"
                                     }
                                 }
@@ -201,26 +201,26 @@
                         }
                     }
                 },
-                "description":"Delete use by ID",
+                "description": "Delete use by ID",
                 "tags": [
                     "Users"
                 ],
                 "responses": {
-                    "400":{
+                    "400": {
                         "description": "Bad request"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorized"
                     },
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "application/json":{
-                                "schema":{
-                                    "$ref" : "#/components/schemas/GetUser"
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetUser"
                                 }
                             }
                         }
@@ -228,12 +228,12 @@
                 }
             }
         },
-        "/users/addresses":{
-            "get":{
+        "/users/addresses": {
+            "get": {
                 "security": [
                     {
-                        "AppiId":[],
-                        "BearerAuth":[]
+                        "AppiId": [],
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Get addresses",
@@ -241,28 +241,28 @@
                     "Users"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "Application/json":{
-                                "schema":{
-                                    "$ref":"#/components/schemas/GetAdresses"
+                            "Application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetAdresses"
                                 }
                             }
                         }
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             }
         },
-        "/users/places":{
-            "get":{
+        "/users/places": {
+            "get": {
                 "security": [
                     {
-                        "AppiId":[],
-                        "BearerAuth":[]
+                        "AppiId": [],
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Get addresses",
@@ -270,66 +270,180 @@
                     "Users"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "Application/json":{
-                                "schema":{
-                                    "$ref":"#/components/schemas/GetPlaces"
+                            "Application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetPlaces"
                                 }
                             }
                         }
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             }
         },
-        "/authorization/loginEmail":{
-            "post":{
+        "/users/roles": {
+            "get": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": [],
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "Application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Roles"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "AppiId": [],
+                        "BearerAuth": []
                     }
                 ],
                 "requestBody":{
                     "content": {
-                        "application/json":{
+                        "Application/json":{
                             "schema":{
-                                "$ref":"#/components/schemas/Credential"
+                                "type": "array",
+                                "items":{
+                                    "$ref": "#/components/schemas/Roles"
+                                }
                             }
                         }
                     }
                 },
-                "description":"Login with e-mail adress",
+                "description": "",
                 "tags": [
-                    "Authorization"
+                    "Users"
                 ],
                 "responses": {
-                    "400":{
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/users/status": {
+            "get": {
+                "security": [
+                    {
+                        "AppiId": [],
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "Application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Status"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "AppiId": [],
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "type": "array",
+                                "items":{
+                                    "$ref": "#/components/schemas/Status"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Get addresses",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/places/": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": [],
+                        "AppiId": []
+                    }
+                ],
+                "description": "",
+                "tags": [
+                    "Places"
+                ],
+                "responses": {
+                    "400": {
                         "description": "Bad request",
                         "content": {
-                            "application/json":{
-                                "schema":{
+                            "application/json": {
+                                "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "Errors":{
+                                        "Errors": {
                                             "type": "array",
-                                            "items":{
+                                            "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "msg":{
-                                                        "type":"string",
-                                                        "example":"Invalid value"
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
                                                     },
-                                                    "param":{
-                                                        "type":"string",
-                                                        "example":"Email"
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "authorization"
                                                     },
-                                                    "location":{
-                                                        "type":"string",
-                                                        "example":"body"
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "headers"
                                                     }
                                                 }
                                             }
@@ -339,23 +453,238 @@
                             }
                         }
                     },
-                    "403":{
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "AppiId": []
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "Application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/PlacesPost"
+                            }
+                        }
+                    }
+                },
+                "description": "",
+                "tags": [
+                    "Places"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
+                                                    },
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "authorization"
+                                                    },
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "headers"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/places/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": [],
+                        "AppiId": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "",
+                "tags": [
+                    "Places"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
+                                                    },
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "authorization"
+                                                    },
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "headers"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/authorization/loginEmail": {
+            "post": {
+                "security": [
+                    {
+                        "AppiId": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Credential"
+                            }
+                        }
+                    }
+                },
+                "description": "Login with e-mail adress",
+                "tags": [
+                    "Authorization"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "Errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
+                                                    },
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "Email"
+                                                    },
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "body"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
                         "description": "Forbidden"
                     },
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "headers": {
-                            "Token":{
-                                "schema":{
+                            "Token": {
+                                "schema": {
                                     "type": "string",
-                                    "example":"Bearer asdfsxcvr"
+                                    "example": "Bearer asdfsxcvr"
                                 }
                             },
-                                
-                            "Refresh":{
-                                "schema":{
+                            "Refresh": {
+                                "schema": {
                                     "type": "string",
-                                    "example":"asdfsxcvr"
+                                    "example": "asdfsxcvr"
                                 }
                             }
                         }
@@ -363,50 +692,50 @@
                 }
             }
         },
-        "/authorization/forgotPassword":{
-            "post":{
+        "/authorization/forgotPassword": {
+            "post": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "application/json":{
-                            "schema":{
-                                "$ref":"#/components/schemas/forgotPassword"
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/forgotPassword"
                             }
                         }
                     }
                 },
-                "description":"Forgot password",
+                "description": "Forgot password",
                 "tags": [
                     "Authorization"
                 ],
                 "responses": {
-                    "400":{
+                    "400": {
                         "description": "Bad request",
                         "content": {
-                            "application/json":{
-                                "schema":{
+                            "application/json": {
+                                "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "Errors":{
+                                        "Errors": {
                                             "type": "array",
-                                            "items":{
+                                            "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "msg":{
-                                                        "type":"string",
-                                                        "example":"Invalid value"
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
                                                     },
-                                                    "param":{
-                                                        "type":"string",
-                                                        "example":"Email"
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "Email"
                                                     },
-                                                    "location":{
-                                                        "type":"string",
-                                                        "example":"body"
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "body"
                                                     }
                                                 }
                                             }
@@ -416,27 +745,27 @@
                             }
                         }
                     },
-                    "403":{
+                    "403": {
                         "description": "Forbidden",
                         "content": {
-                            "Application/json":{
-                                "schema":{
+                            "Application/json": {
+                                "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "Message":{
+                                        "Message": {
                                             "type": "string",
-                                            "example":"Email is not exist"
+                                            "example": "Email is not exist"
                                         }
                                     }
                                 }
                             }
                         }
                     },
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "Application/json":{
-                                "schema":{
+                            "Application/json": {
+                                "schema": {
                                     "type": "object",
                                     "properties": {
                                         "ExpireDate": {
@@ -444,11 +773,11 @@
                                             "format": "date",
                                             "example": "2022-03-10T21:55:53.642Z"
                                         },
-                                        "Message":{
+                                        "Message": {
                                             "type": "string",
                                             "format": "date",
-                                            "example":"Code is sent too e-mail"
-                                        } 
+                                            "example": "Code is sent too e-mail"
+                                        }
                                     }
                                 }
                             }
@@ -457,50 +786,50 @@
                 }
             }
         },
-        "/authorization/verifyCode":{
-            "post":{
+        "/authorization/verifyCode": {
+            "post": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "application/json":{
-                            "schema":{
-                                "$ref":"#/components/schemas/verifyCode"
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/verifyCode"
                             }
                         }
                     }
                 },
-                "description":"Verify code from email",
+                "description": "Verify code from email",
                 "tags": [
                     "Authorization"
                 ],
                 "responses": {
-                    "400":{
+                    "400": {
                         "description": "Bad request",
                         "content": {
-                            "application/json":{
-                                "schema":{
+                            "application/json": {
+                                "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "Errors":{
+                                        "Errors": {
                                             "type": "array",
-                                            "items":{
+                                            "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "msg":{
-                                                        "type":"string",
-                                                        "example":"Invalid value"
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
                                                     },
-                                                    "param":{
-                                                        "type":"string",
-                                                        "example":"Email"
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "Email"
                                                     },
-                                                    "location":{
-                                                        "type":"string",
-                                                        "example":"body"
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "body"
                                                     }
                                                 }
                                             }
@@ -510,19 +839,19 @@
                             }
                         }
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorized"
                     },
-                    "403":{
+                    "403": {
                         "description": "Forbidden"
                     },
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "headers": {
-                            "Tempauth":{
-                                "schema":{
+                            "Tempauth": {
+                                "schema": {
                                     "type": "string",
-                                    "example":"asdffdger"
+                                    "example": "asdffdger"
                                 }
                             }
                         }
@@ -530,51 +859,51 @@
                 }
             }
         },
-        "/authorization/changePassword":{
-            "post":{
+        "/authorization/changePassword": {
+            "post": {
                 "security": [
                     {
-                        "ChangePassword":[],
-                        "AppiId":[]
+                        "ChangePassword": [],
+                        "AppiId": []
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "application/json":{
-                            "schema":{
-                                "$ref":"#/components/schemas/Credential"
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Credential"
                             }
                         }
                     }
                 },
-                "description":"Change password",
+                "description": "Change password",
                 "tags": [
                     "Authorization"
                 ],
                 "responses": {
-                    "400":{
+                    "400": {
                         "description": "Bad request",
                         "content": {
-                            "Application/json":{
-                                "schema":{
+                            "Application/json": {
+                                "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "Errors":{
+                                        "Errors": {
                                             "type": "array",
-                                            "items":{
+                                            "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "msg":{
-                                                        "type":"string",
-                                                        "example":"Invalid value"
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
                                                     },
-                                                    "param":{
-                                                        "type":"string",
-                                                        "example":"Email"
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "Email"
                                                     },
-                                                    "location":{
-                                                        "type":"string",
-                                                        "example":"headers"
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "headers"
                                                     }
                                                 }
                                             }
@@ -584,19 +913,19 @@
                             }
                         }
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorized"
                     },
-                    "403":{
+                    "403": {
                         "description": "Forbidden"
                     },
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "application/json":{
-                                "schema":{
+                            "application/json": {
+                                "schema": {
                                     "type": "string",
-                                    "example":"Password changed"
+                                    "example": "Password changed"
                                 }
                             }
                         }
@@ -604,50 +933,50 @@
                 }
             }
         },
-        "/authorization/register":{
-            "post":{
+        "/authorization/register": {
+            "post": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
-                "description":"Register user",
+                "description": "Register user",
                 "tags": [
                     "Authorization"
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
-                                "$ref":"#/components/schemas/Register"
+                        "Application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "400":{
+                    "400": {
                         "description": "Bad request",
                         "content": {
-                            "Application/json":{
-                                "schema":{
+                            "Application/json": {
+                                "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "Errors":{
+                                        "Errors": {
                                             "type": "array",
-                                            "items":{
+                                            "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "msg":{
-                                                        "type":"string",
-                                                        "example":"Invalid value"
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
                                                     },
-                                                    "param":{
-                                                        "type":"string",
-                                                        "example":"Email"
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "Email"
                                                     },
-                                                    "location":{
-                                                        "type":"string",
-                                                        "example":"body"
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "body"
                                                     }
                                                 }
                                             }
@@ -657,52 +986,52 @@
                             }
                         }
                     },
-                    "403":{
+                    "403": {
                         "description": "Forbidden"
                     },
-                    "201":{
+                    "201": {
                         "description": "Created"
                     }
                 }
             }
         },
-        "/authorization/generateToken":{
-            "post":{
+        "/authorization/generateToken": {
+            "post": {
                 "security": [
                     {
-                        "BearerAuth":[],
-                        "Refresh":[],
-                        "AppiId":[]
+                        "BearerAuth": [],
+                        "Refresh": [],
+                        "AppiId": []
                     }
                 ],
-                "description":"Generate token by old refresh and access (jwt) token",
+                "description": "Generate token by old refresh and access (jwt) token",
                 "tags": [
                     "Authorization"
                 ],
                 "responses": {
-                    "400":{
+                    "400": {
                         "description": "Bad request",
                         "content": {
-                            "Application/json":{
-                                "schema":{
+                            "Application/json": {
+                                "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "Errors":{
+                                        "Errors": {
                                             "type": "array",
-                                            "items":{
+                                            "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "msg":{
-                                                        "type":"string",
-                                                        "example":"Invalid value"
+                                                    "msg": {
+                                                        "type": "string",
+                                                        "example": "Invalid value"
                                                     },
-                                                    "param":{
-                                                        "type":"string",
-                                                        "example":"BearerAuth"
+                                                    "param": {
+                                                        "type": "string",
+                                                        "example": "BearerAuth"
                                                     },
-                                                    "location":{
-                                                        "type":"string",
-                                                        "example":"headers"
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "headers"
                                                     }
                                                 }
                                             }
@@ -712,33 +1041,33 @@
                             }
                         }
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorized"
                     },
-                    "403":{
+                    "403": {
                         "description": "BadRequest"
                     },
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "application/json":{
-                                "schema":{
+                            "application/json": {
+                                "schema": {
                                     "type": "string",
-                                    "example":"Your token is valid"
+                                    "example": "Your token is valid"
                                 }
                             }
                         }
                     },
-                    "205":{
+                    "205": {
                         "description": "Reset Content",
                         "headers": {
                             "Authorization": {
-                                "schema":{
+                                "schema": {
                                     "type": "string"
                                 }
                             },
                             "Refresh": {
-                                "schema":{
+                                "schema": {
                                     "type": "string"
                                 }
                             }
@@ -747,18 +1076,18 @@
                 }
             }
         },
-        "/visits/{id}":{
-            "get":{
+        "/visits/{id}": {
+            "get": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "parameters": [
                     {
                         "in": "path",
                         "name": "id",
-                        "schema":{
+                        "schema": {
                             "type": "integer"
                         },
                         "required": true
@@ -769,32 +1098,32 @@
                     "Visits"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "Application/json":{
-                                "schema":{
-                                    "$ref":"#/components/schemas/VisitOrder"
+                            "Application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VisitOrder"
                                 }
                             }
                         }
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorize"
                     }
                 }
             },
-            "put":{
+            "put": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "parameters": [
                     {
                         "in": "path",
                         "name": "id",
-                        "schema":{
+                        "schema": {
                             "type": "integer"
                         },
                         "required": true
@@ -804,30 +1133,30 @@
                 "tags": [
                     "Visits"
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
-                                "$ref":"#/components/schemas/PostVisit"
+                        "Application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostVisit"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201":{
+                    "201": {
                         "description": "Created"
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorize"
                     }
                 }
             }
         },
-        "/visits/":{
-            "get":{
+        "/visits/": {
+            "get": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "description": "Get all visits",
@@ -835,98 +1164,98 @@
                     "Visits"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "Application/json":{
-                                "schema":{
+                            "Application/json": {
+                                "schema": {
                                     "type": "array",
-                                    "items":{
-                                        "$ref":"#/components/schemas/VisitOrder"
+                                    "items": {
+                                        "$ref": "#/components/schemas/VisitOrder"
                                     }
                                 }
                             }
                         }
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorize"
                     }
                 }
             },
-            "post":{
+            "post": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "description": "Post visit",
                 "tags": [
                     "Visits"
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
-                                "$ref":"#/components/schemas/PostVisit"
+                        "Application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostVisit"
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201":{
+                    "201": {
                         "description": "Created"
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorize"
                     }
                 }
             }
         },
-        "/visits/multi":{
-            "post":{
+        "/visits/multi": {
+            "post": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "description": "Post visits",
                 "tags": [
                     "Visits"
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
+                        "Application/json": {
+                            "schema": {
                                 "type": "array",
-                                "items":{
-                                    "$ref":"#/components/schemas/PostVisit"
+                                "items": {
+                                    "$ref": "#/components/schemas/PostVisit"
                                 }
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201":{
+                    "201": {
                         "description": "Created"
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorize"
                     }
                 }
             }
         },
-        "/products/{id}":{
-            "get":{
+        "/products/{id}": {
+            "get": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "parameters": [
                     {
                         "in": "path",
                         "name": "id",
-                        "schema":{
+                        "schema": {
                             "type": "integer"
                         },
                         "required": true
@@ -937,27 +1266,27 @@
                     "Products"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "Application/json":{
-                                "schema":{
-                                    "$ref":"#/components/schemas/Product"
+                            "Application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
                                 }
                             }
                         }
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             }
         },
-        "/products/":{
-            "get":{
+        "/products/": {
+            "get": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "description": "Get products",
@@ -965,37 +1294,37 @@
                     "Products"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK",
                         "content": {
-                            "Application/json":{
-                                "schema":{
-                                    "type":"array",
-                                    "items":{
-                                        "$ref":"#/components/schemas/Product"
+                            "Application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
                                     }
                                 }
                             }
                         }
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             },
-            "post":{
+            "post": {
                 "security": [
                     {
-                        "AppiId":[],
-                        "BearerAuth":[]
+                        "AppiId": [],
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Post products",
-                "requestBody":{
-                    "content":{
-                        "Application/json":{
-                            "schema":{
-                                "$ref":"#/components/schemas/PostProduct"
+                "requestBody": {
+                    "content": {
+                        "Application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostProduct"
                             }
                         }
                     }
@@ -1004,30 +1333,87 @@
                     "Products"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     },
-                    "401":{
+                    "401": {
                         "description": "Unauthorizaiton"
                     }
                 }
             }
         },
-        "/sizes/":{
-            "post":{
+        "/pictures/": {
+            "post": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": [],
+                        "BearerAuth": []
                     }
                 ],
-                "requestBody":{
+                "description": "",
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
-                                "$ref":"#/components/schemas/Size"
+                        "Application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Pictures"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Pictures"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorizaiton"
+                    }
+                }
+            },
+            "get": {
+                "security": [
+                    {
+                        "AppiId": [],
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "",
+                "tags": [
+                    "Pictures"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }            
+        },
+        "/sizes/": {
+            "post": {
+                "security": [
+                    {
+                        "AppiId": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "Application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Size"
                             }
                         }
                     }
@@ -1037,69 +1423,117 @@
                     "Sizes"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            },
+            "get": {
+                "security": [
+                    {
+                        "AppiId": []
+                    }
+                ],
+                "description": "Get products",
+                "tags": [
+                    "Sizes"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
                         "description": "No Content"
                     }
                 }
             }
         },
-        "/sizes/{id}":{
-            "put":{
+        "/sizes/{id}": {
+            "put": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "parameters": [
                     {
                         "in": "path",
                         "name": "id",
-                        "schema":{
+                        "schema": {
                             "type": "integer"
                         },
                         "required": true
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
-                                "$ref":"#/components/schemas/Size"
+                        "Application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Size"
                             }
                         }
                     }
                 },
-                "description": "Get products",
+                "description": "",
                 "tags": [
                     "Sizes"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            },
+            "get": {
+                "security": [
+                    {
+                        "AppiId": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "",
+                "tags": [
+                    "Sizes"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
                         "description": "No Content"
                     }
                 }
             }
         },
-        "/sizes/multi":{
-            "post":{
+        "/sizes/multi": {
+            "post": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
+                        "Application/json": {
+                            "schema": {
                                 "type": "array",
-                                "items":{
-                                    "$ref":"#/components/schemas/Size"
+                                "items": {
+                                    "$ref": "#/components/schemas/Size"
                                 }
                             }
                         }
@@ -1110,20 +1544,20 @@
                     "Sizes"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             }
         },
-        "/additions/":{
-            "get":{
+        "/additions/": {
+            "get": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "description": "Get additions",
@@ -1131,24 +1565,24 @@
                     "Additions"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             },
-            "post":{
+            "post": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
+                        "Application/json": {
+                            "schema": {
                                 "$ref": "#/components/schemas/Addition"
                             }
                         }
@@ -1159,27 +1593,27 @@
                     "Additions"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             }
         },
-        "/additions/{id}":{
-            "get":{
+        "/additions/{id}": {
+            "get": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "parameters": [
                     {
                         "in": "path",
                         "name": "id",
-                        "schema":{
+                        "schema": {
                             "type": "integer"
                         },
                         "required": true
@@ -1190,24 +1624,24 @@
                     "Additions"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             },
-            "put":{
+            "put": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
+                        "Application/json": {
+                            "schema": {
                                 "$ref": "#/components/schemas/Addition"
                             }
                         }
@@ -1217,7 +1651,7 @@
                     {
                         "in": "path",
                         "name": "id",
-                        "schema":{
+                        "schema": {
                             "type": "integer"
                         },
                         "required": true
@@ -1228,28 +1662,28 @@
                     "Additions"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             }
         },
-        "/additions/multi":{
-            "post":{
+        "/additions/multi": {
+            "post": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
+                        "Application/json": {
+                            "schema": {
                                 "type": "array",
-                                "items":{
+                                "items": {
                                     "$ref": "#/components/schemas/Addition"
                                 }
                             }
@@ -1261,27 +1695,27 @@
                     "Additions"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             }
         },
-        "/orders/{id}":{
-            "get":{
+        "/orders/{id}": {
+            "get": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
                 "parameters": [
                     {
                         "in": "path",
                         "name": "id",
-                        "schema":{
+                        "schema": {
                             "type": "integer"
                         },
                         "required": true
@@ -1292,24 +1726,24 @@
                     "Orders"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             },
-            "put":{
+            "put": {
                 "security": [
                     {
-                        "AppiId":[]
+                        "AppiId": []
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
+                        "Application/json": {
+                            "schema": {
                                 "$ref": "#/components/schemas/Addition"
                             }
                         }
@@ -1319,7 +1753,7 @@
                     {
                         "in": "path",
                         "name": "id",
-                        "schema":{
+                        "schema": {
                             "type": "integer"
                         },
                         "required": true
@@ -1327,30 +1761,30 @@
                 ],
                 "description": "Get addition",
                 "tags": [
-                    "Additions"
+                    "Orders"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
                         "description": "No Content"
                     }
                 }
             }
         },
-        "/orders/":{
-            "post":{
+        "/orders/": {
+            "post": {
                 "security": [
                     {
-                        "AppiId":[],
-                        "BearerAuth":[]
+                        "AppiId": [],
+                        "BearerAuth": []
                     }
                 ],
-                "requestBody":{
+                "requestBody": {
                     "content": {
-                        "Application/json":{
-                            "schema":{
+                        "Application/json": {
+                            "schema": {
                                 "$ref": "#/components/schemas/Orders"
                             }
                         }
@@ -1361,10 +1795,61 @@
                     "Orders"
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "204":{
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/status": {
+            "get": {
+                "security": [
+                    {
+                        "AppiId": [],
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "",
+                "tags": [
+                    "Orders"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "AppiId": [],
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "Application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderStatus"
+                            }
+                        }
+                    }
+                },
+                "description": "Post additions",
+                "tags": [
+                    "Orders"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
                         "description": "No Content"
                     }
                 }
@@ -1373,118 +1858,118 @@
     },
     "components": {
         "securitySchemes": {
-            "BearerAuth":{
+            "BearerAuth": {
                 "type": "http",
                 "scheme": "bearer"
             },
-            "Refresh":{
+            "Refresh": {
                 "type": "apiKey",
                 "in": "header",
                 "name": "Refresh"
             },
-            "ChangePassword":{
+            "ChangePassword": {
                 "type": "apiKey",
                 "in": "header",
                 "name": "Tempauth"
             },
-            "AppiId":{
+            "AppiId": {
                 "type": "apiKey",
                 "in": "header",
                 "name": "appiId"
             }
         },
         "schemas": {
-            "VisitOrder":{
+            "VisitOrder": {
                 "required": [
                     "Visit",
                     "Orders"
                 ],
                 "properties": {
-                    "Visit":{
-                        "type":"object",
-                        "$ref":"#/components/schemas/Visit"
+                    "Visit": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/Visit"
                     },
-                    "Orders":{
+                    "Orders": {
                         "type": "array",
-                        "items":{
+                        "items": {
                             "type": "object",
-                            "$ref":"#/components/schemas/Order"
+                            "$ref": "#/components/schemas/Order"
                         }
                     }
                 }
             },
-            "Visit":{
+            "Visit": {
                 "type": "object",
                 "properties": {
-                    "ID":{
+                    "ID": {
                         "type": "integer"
                     },
-                    "Date":{
+                    "Date": {
                         "type": "string",
                         "format": "date"
                     },
-                    "SlotsNumber":{
+                    "SlotsNumber": {
                         "type": "integer"
                     },
-                    "Price":{
+                    "Price": {
                         "type": "integer"
                     },
-                    "PlaceName":{
+                    "PlaceName": {
                         "type": "string"
                     },
-                    "AreaCode":{
+                    "AreaCode": {
                         "type": "string"
                     },
-                    "Active":{
+                    "Active": {
                         "type": "boolean"
                     }
                 }
             },
-            "PostVisit":{
+            "PostVisit": {
                 "type": "object",
                 "properties": {
-                    "Date":{
+                    "Date": {
                         "type": "string",
                         "format": "date"
                     },
-                    "IdPlace":{
+                    "IdPlace": {
                         "type": "integer"
                     },
-                    "SlotsNumber":{
+                    "SlotsNumber": {
                         "type": "integer"
                     }
                 }
             },
-            "Order":{
+            "Order": {
                 "type": "object",
                 "properties": {
-                    "ID":{
+                    "ID": {
                         "type": "integer"
                     },
-                    "Price":{
+                    "Price": {
                         "type": "integer"
                     },
-                    "Description":{
+                    "Description": {
                         "type": "string"
                     },
-                    "Name":{
+                    "Name": {
                         "type": "string"
                     },
-                    "FirstName":{
+                    "FirstName": {
                         "type": "string"
                     },
-                    "LastName":{
+                    "LastName": {
                         "type": "string"
                     },
-                    "PhoneNumber":{
+                    "PhoneNumber": {
                         "type": "string"
                     },
-                    "Email":{
+                    "Email": {
                         "type": "string"
                     }
                 }
             },
-            "Register":{
+            "Register": {
                 "type": "object",
                 "required": [
                     "FirstName",
@@ -1497,30 +1982,30 @@
                     "Adressess"
                 ],
                 "properties": {
-                    "FirstName":{
+                    "FirstName": {
                         "type": "string"
                     },
-                    "LastName":{
+                    "LastName": {
                         "type": "string"
                     },
-                    "PhoneNumber":{
+                    "PhoneNumber": {
                         "type": "string"
                     },
-                    "Email":{
+                    "Email": {
                         "type": "string"
                     },
-                    "IdStatus":{
+                    "IdStatus": {
                         "type": "integer"
                     },
-                    "IdRole":{
+                    "IdRole": {
                         "type": "integer"
                     },
-                    "Password":{
+                    "Password": {
                         "type": "string"
                     },
-                    "Addresses":{
+                    "Addresses": {
                         "type": "array",
-                        "items":{
+                        "items": {
                             "type": "object",
                             "required": [
                                 "StreetAndNumber",
@@ -1528,13 +2013,13 @@
                                 "IdPlace"
                             ],
                             "properties": {
-                                "StreetAndNumber":{
+                                "StreetAndNumber": {
                                     "type": "string"
                                 },
-                                "GpsLocation":{
+                                "GpsLocation": {
                                     "type": "string"
                                 },
-                                "IdPlace":{
+                                "IdPlace": {
                                     "type": "integer"
                                 }
                             }
@@ -1542,9 +2027,9 @@
                     }
                 }
             },
-            "GetUsers":{
+            "GetUsers": {
                 "type": "array",
-                "items":{
+                "items": {
                     "type": "object",
                     "required": [
                         "ID",
@@ -1556,54 +2041,54 @@
                         "IdRole"
                     ],
                     "properties": {
-                        "ID":{
+                        "ID": {
                             "type": "string"
                         },
-                        "FirstName":{
+                        "FirstName": {
                             "type": "string"
                         },
-                        "LastName":{
+                        "LastName": {
                             "type": "string"
                         },
-                        "PhoneNumber":{
+                        "PhoneNumber": {
                             "type": "string"
                         },
-                        "Email":{
+                        "Email": {
                             "type": "string"
                         },
-                        "Status":{
+                        "Status": {
                             "type": "object",
                             "required": [
                                 "ID",
                                 "Status"
                             ],
                             "properties": {
-                                "ID":{
+                                "ID": {
                                     "type": "integer"
                                 },
-                                "Status":{
+                                "Status": {
                                     "type": "string"
                                 }
                             }
                         },
-                        "Role":{
+                        "Role": {
                             "type": "object",
                             "required": [
                                 "ID",
                                 "RoleName"
                             ],
                             "properties": {
-                                "ID":{
+                                "ID": {
                                     "type": "integer"
                                 },
-                                "RoleName":{
+                                "RoleName": {
                                     "type": "string"
                                 }
                             }
                         },
-                        "Addresses":{
+                        "Addresses": {
                             "type": "array",
-                            "items":{
+                            "items": {
                                 "type": "object",
                                 "required": [
                                     "ID",
@@ -1614,22 +2099,22 @@
                                     "Active"
                                 ],
                                 "properties": {
-                                    "ID":{
+                                    "ID": {
                                         "type": "integer"
                                     },
-                                    "StreetAndNumber":{
+                                    "StreetAndNumber": {
                                         "type": "string"
                                     },
-                                    "GpsLocation":{
+                                    "GpsLocation": {
                                         "type": "string"
                                     },
-                                    "PlaceName":{
+                                    "PlaceName": {
                                         "type": "string"
                                     },
-                                    "AreaCode":{
+                                    "AreaCode": {
                                         "type": "string"
                                     },
-                                    "Active":{
+                                    "Active": {
                                         "type": "boolean"
                                     }
                                 }
@@ -1638,7 +2123,7 @@
                     }
                 }
             },
-            "GetUser":{
+            "GetUser": {
                 "type": "object",
                 "required": [
                     "ID",
@@ -1650,54 +2135,54 @@
                     "IdRole"
                 ],
                 "properties": {
-                    "ID":{
+                    "ID": {
                         "type": "string"
                     },
-                    "FirstName":{
+                    "FirstName": {
                         "type": "string"
                     },
-                    "LastName":{
+                    "LastName": {
                         "type": "string"
                     },
-                    "PhoneNumber":{
+                    "PhoneNumber": {
                         "type": "string"
                     },
-                    "Email":{
+                    "Email": {
                         "type": "string"
                     },
-                    "Status":{
+                    "Status": {
                         "type": "object",
                         "required": [
                             "ID",
                             "Status"
                         ],
                         "properties": {
-                            "ID":{
+                            "ID": {
                                 "type": "integer"
                             },
-                            "Status":{
+                            "Status": {
                                 "type": "string"
                             }
                         }
                     },
-                    "Role":{
+                    "Role": {
                         "type": "object",
                         "required": [
                             "ID",
                             "RoleName"
                         ],
                         "properties": {
-                            "ID":{
+                            "ID": {
                                 "type": "integer"
                             },
-                            "RoleName":{
+                            "RoleName": {
                                 "type": "string"
                             }
                         }
                     },
-                    "Addresses":{
+                    "Addresses": {
                         "type": "array",
-                        "items":{
+                        "items": {
                             "type": "object",
                             "required": [
                                 "ID",
@@ -1708,22 +2193,22 @@
                                 "Active"
                             ],
                             "properties": {
-                                "ID":{
+                                "ID": {
                                     "type": "integer"
                                 },
-                                "StreetAndNumber":{
+                                "StreetAndNumber": {
                                     "type": "string"
                                 },
-                                "GpsLocation":{
+                                "GpsLocation": {
                                     "type": "string"
                                 },
-                                "PlaceName":{
+                                "PlaceName": {
                                     "type": "string"
                                 },
-                                "AreaCode":{
+                                "AreaCode": {
                                     "type": "string"
                                 },
-                                "Active":{
+                                "Active": {
                                     "type": "boolean"
                                 }
                             }
@@ -1731,9 +2216,9 @@
                     }
                 }
             },
-            "GetAdresses":{
+            "GetAdresses": {
                 "type": "array",
-                "items":{
+                "items": {
                     "type": "object",
                     "required": [
                         "ID",
@@ -1744,30 +2229,30 @@
                         "Active"
                     ],
                     "properties": {
-                        "ID":{
+                        "ID": {
                             "type": "integer"
                         },
-                        "StreetAndNumber":{
+                        "StreetAndNumber": {
                             "type": "string"
                         },
-                        "GpsLocation":{
+                        "GpsLocation": {
                             "type": "string"
                         },
-                        "PlaceName":{
+                        "PlaceName": {
                             "type": "string"
                         },
-                        "AreaCode":{
+                        "AreaCode": {
                             "type": "string"
                         },
-                        "Active":{
+                        "Active": {
                             "type": "boolean"
                         }
                     }
                 }
             },
-            "GetPlaces":{
+            "GetPlaces": {
                 "type": "array",
-                "items":{
+                "items": {
                     "type": "object",
                     "required": [
                         "ID",
@@ -1776,33 +2261,33 @@
                         "Active"
                     ],
                     "properties": {
-                        "ID":{
+                        "ID": {
                             "type": "integer"
                         },
-                        "PlaceName":{
+                        "PlaceName": {
                             "type": "string"
                         },
-                        "AreaCode":{
+                        "AreaCode": {
                             "type": "string"
                         },
-                        "Active":{
+                        "Active": {
                             "type": "boolean"
                         }
                     }
                 }
             },
-            "DeleteUser":{
-             "type": "object",
-             "required": [
-                 "ID"
-             ],
-             "properties": {
-                 "ID":{
-                     "type": "integer"
-                 }
-             }   
+            "DeleteUser": {
+                "type": "object",
+                "required": [
+                    "ID"
+                ],
+                "properties": {
+                    "ID": {
+                        "type": "integer"
+                    }
+                }
             },
-            "PutUser":{
+            "PutUser": {
                 "type": "object",
                 "required": [
                     "FirstName",
@@ -1813,27 +2298,27 @@
                     "IdRole"
                 ],
                 "properties": {
-                    "FirstName":{
+                    "FirstName": {
                         "type": "string"
                     },
-                    "LastName":{
+                    "LastName": {
                         "type": "string"
                     },
-                    "PhoneNumber":{
+                    "PhoneNumber": {
                         "type": "string"
                     },
-                    "Email":{
+                    "Email": {
                         "type": "string"
                     },
-                    "IdStatus":{
+                    "IdStatus": {
                         "type": "integer"
                     },
-                    "IdRole":{
+                    "IdRole": {
                         "type": "integer"
                     },
-                    "Addresses":{
+                    "Addresses": {
                         "type": "array",
-                        "items":{
+                        "items": {
                             "type": "object",
                             "required": [
                                 "StreetAndNumber",
@@ -1843,19 +2328,19 @@
                                 "Active"
                             ],
                             "properties": {
-                                "StreetAndNumber":{
+                                "StreetAndNumber": {
                                     "type": "string"
                                 },
-                                "GpsLocation":{
+                                "GpsLocation": {
                                     "type": "string"
                                 },
-                                "PlaceName":{
+                                "PlaceName": {
                                     "type": "string"
                                 },
-                                "AreaCode":{
+                                "AreaCode": {
                                     "type": "string"
                                 },
-                                "Active":{
+                                "Active": {
                                     "type": "boolean"
                                 }
                             }
@@ -1863,92 +2348,92 @@
                     }
                 }
             },
-            "Credential":{
+            "Credential": {
                 "type": "object",
                 "required": [
                     "Email",
                     "Password"
                 ],
                 "properties": {
-                    "Email":{
+                    "Email": {
                         "type": "string"
                     },
-                    "Password":{
+                    "Password": {
                         "type": "string"
                     }
                 }
             },
-            "forgotPassword":{
+            "forgotPassword": {
                 "type": "object",
                 "required": [
                     "Email"
                 ],
                 "properties": {
-                    "Email":{
+                    "Email": {
                         "type": "string"
                     }
-                } 
+                }
             },
-            "verifyCode":{
+            "verifyCode": {
                 "type": "object",
                 "required": [
                     "Email",
                     "Code"
                 ],
                 "properties": {
-                    "Email":{
+                    "Email": {
                         "type": "string"
                     },
-                    "Code":{
+                    "Code": {
                         "type": "string"
                     }
-                } 
+                }
             },
-            "Product":{
+            "Product": {
                 "type": "object",
                 "properties": {
-                    "ID":{
+                    "ID": {
                         "type": "integer"
                     },
-                    "Name":{
+                    "Name": {
                         "type": "string"
                     },
-                    "Available":{
+                    "Available": {
                         "type": "boolean"
                     },
-                    "Description":{
+                    "Description": {
                         "type": "string"
                     },
-                    "File_Path":{
+                    "File_Path": {
                         "type": "string"
                     },
-                    "Size":{
-                        "type":"array",
-                        "items":{
-                            "properties":{
-                                "ID":{
-                                    "type":"integer"
+                    "Size": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "ID": {
+                                    "type": "integer"
                                 },
-                                "Size":{
-                                    "type":"string"
+                                "Size": {
+                                    "type": "string"
                                 },
-                                "Price":{
+                                "Price": {
                                     "type": "integer"
                                 }
                             }
                         }
                     },
-                    "Additions":{
-                        "type":"array",
-                        "items":{
-                            "properties":{
-                                "ID":{
-                                    "type":"integer"
+                    "Additions": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "ID": {
+                                    "type": "integer"
                                 },
-                                "Name":{
-                                    "type":"string"
+                                "Name": {
+                                    "type": "string"
                                 },
-                                "Price":{
+                                "Price": {
                                     "type": "integer"
                                 }
                             }
@@ -1956,119 +2441,197 @@
                     }
                 }
             },
-            "PostProduct":{
+            "PostProduct": {
                 "type": "object",
                 "properties": {
-                    "IdPicture":{
+                    "IdPicture": {
                         "type": "integer"
                     },
-                    "Name":{
+                    "Name": {
                         "type": "string"
                     },
-                    "Description":{
+                    "Description": {
                         "type": "string"
                     },
-                    "Available":{
+                    "Available": {
                         "type": "boolean"
                     },
-                    "Sizes":{
-                        "type":"array",
-                        "items":{
-                            "properties":{
-                                "IdSize":{
-                                    "type":"integer"
+                    "Sizes": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "IdSize": {
+                                    "type": "integer"
                                 },
-                                "Price":{
+                                "Price": {
                                     "type": "integer"
                                 }
                             }
                         }
                     },
-                    "Additions":{
-                        "type":"array",
-                        "items":{
-                            "properties":{
-                                "IdAddition":{
-                                    "type":"integer"
+                    "Additions": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "IdAddition": {
+                                    "type": "integer"
                                 }
                             }
                         }
                     }
                 }
             },
-            "Size":{
+            "Size": {
                 "type": "object",
                 "properties": {
-                    "Size":{
+                    "Size": {
                         "type": "string"
                     }
                 }
             },
-            "Addition":{
+            "Addition": {
                 "type": "object",
                 "properties": {
-                    "Name":{
+                    "Name": {
                         "type": "string"
                     },
-                    "Price":{
+                    "Price": {
                         "type": "integer"
                     }
                 }
             },
-            "Orders":{
+            "Orders": {
                 "type": "object",
                 "properties": {
-                    "Description":{
+                    "Description": {
                         "type": "string"
                     },
-                    "IdVisit":{
+                    "IdVisit": {
                         "type": "integer"
                     },
-                    "IdAddress":{
+                    "IdAddress": {
                         "type": "integer"
                     },
-                    "Price":{
+                    "IdOrderStatus":{
                         "type": "integer"
                     },
-                    "Items":{
-                        "type":"array",
-                        "items":{
-                            "$ref":"#/components/schemas/Item"
+                    "Price": {
+                        "type": "integer"
+                    },
+                    "Items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Item"
                         }
                     }
                 }
             },
-            "Item":{
+            "Item": {
                 "type": "object",
                 "properties": {
-                    "IdProduct":{
+                    "IdProduct": {
                         "type": "integer"
                     },
-                    "IdSize":{
+                    "IdSize": {
                         "type": "integer"
                     },
-                    "Price":{
+                    "Price": {
                         "type": "integer"
                     },
-                    "Additions":{
-                        "type":"array",
-                        "items":{
-                            "$ref":"#/components/schemas/AdditionGet"
+                    "Additions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AdditionGet"
                         }
                     }
                 }
             },
-            "AdditionGet":{
-                "type":"object",
-                "properties":{
-                    "ID":{
-                        "type":"integer"
-                    },
-                    "Name":{
-                        "type":"string"
-                    },
-                    "Price":{
+            "AdditionGet": {
+                "type": "object",
+                "properties": {
+                    "ID": {
                         "type": "integer"
+                    },
+                    "Name": {
+                        "type": "string"
+                    },
+                    "Price": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "Places": {
+                "type": "object",
+                "properties": {
+                    "ID": {
+                        "type": "integer"
+                    },
+                    "PlaceName": {
+                        "type": "string"
+                    },
+                    "AreaCode": {
+                        "type": "integer"
+                    },
+                    "Active": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PlacesPost": {
+                "type": "object",
+                "properties": {
+                    "PlaceName": {
+                        "type": "string"
+                    },
+                    "AreaCode": {
+                        "type": "integer"
+                    },
+                    "Active": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Status":{
+                "type": "object",
+                "properties": {
+                    "ID": {
+                        "type": "integer"
+                    },
+                    "Status": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OrderStatus":{
+                "type": "object",
+                "properties": {
+                    "ID": {
+                        "type": "integer"
+                    },
+                    "Name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Roles":{
+                "type": "object",
+                "properties": {
+                    "ID": {
+                        "type": "integer"
+                    },
+                    "RoleName": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Pictures":{
+                "type": "object",
+                "properties": {
+                    "Name": {
+                        "type": "string"
+                    },
+                    "File_Path": {
+                        "type": "string"
                     }
                 }
             }

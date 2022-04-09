@@ -113,7 +113,7 @@ router.post('/generateToken', userSchema.generatetokenSchema, auth.validateInput
     if(req.isTokenVerify) return res.status(200).send('Your token is valid')
     const userId=await authRepo.getUserByToken(req.headers['refresh'])
     if(userId==undefined) return res.sendStatus(403)
-    const user = await userRepo.getUserById(userId)
+    const user = await userRepo.getUserById(userId.IdUser)
     const token=jwtHandler.generateToken(req.headers, user[0])
     return res.header(token).sendStatus(205)
 })
