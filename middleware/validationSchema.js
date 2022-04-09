@@ -112,4 +112,17 @@ const postVisits=[
     body('*.SlotsNumber').exists('checkNull')
 ]
 
-export {postVisits, postVisit, postAddition, postAdditions, postSizes, postSize, postProduct, postPlace, userSchema, emailVerifyCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}
+const orders=[
+    body('Description').isString().exists('checkNull'),
+    body('IdVisit').isInt().exists('checkNull'),
+    body('IdAddress').isInt().exists('checkNull'),
+    body('Price').isFloat().exists('checkNull'),
+    body('Items').isArray({min:1}).exists('checkNull'),
+    body('Items.*.IdProduct').isInt().exists('checkNull'),
+    body('Items.*.IdSize').isInt().exists('checkNull'),
+    body('Items.*.Price').isFloat().exists('checkNull'),
+    body('Items.*.Additions').exists('checkNull'),
+    body('Items.*.Additions.*.ID').isInt().exists('checkNull')
+
+]
+export {orders, postVisits, postVisit, postAddition, postAdditions, postSizes, postSize, postProduct, postPlace, userSchema, emailVerifyCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}

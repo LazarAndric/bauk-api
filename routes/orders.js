@@ -18,8 +18,7 @@ router.get('/:id', async(req,res)=>{
 // })
 
 // //NO AUTH
-// //router.post('/', userSchema.postProduct, auth.validateInput,
-router.post('/', auth.verifyUserToken, async(req,res)=>{
+router.post('/', validationSchema.orders, auth.validateInput, auth.verifyUserToken, async(req,res)=>{
     const product=await productRepo.getProduct(req.body.Items[0].IdProduct)
     req.body.Comments=product.Name + ", " + product.Description
     const idVisit=await orderRepo.getVisitByAddress(req.body.IdAddress)
@@ -33,6 +32,7 @@ router.post('/', auth.verifyUserToken, async(req,res)=>{
         IdVisit:idVisit[0].ID,
         IdOrder:result.insertId
     })
+    //Update price
     r=await orderRepo.putVisit(idVisit[0].ID, req.body.Price)
     r=await orderRepo.postAddress({
         IdOrder: result.insertId,
