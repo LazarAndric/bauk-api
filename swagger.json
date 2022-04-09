@@ -440,11 +440,13 @@
                                     "type": "object",
                                     "properties": {
                                         "ExpireDate": {
-                                            "type":"string",
+                                            "type": "string",
+                                            "format": "date",
                                             "example": "2022-03-10T21:55:53.642Z"
                                         },
                                         "Message":{
                                             "type": "string",
+                                            "format": "date",
                                             "example":"Code is sent too e-mail"
                                         } 
                                     }
@@ -1349,14 +1351,14 @@
                     "content": {
                         "Application/json":{
                             "schema":{
-                                "$ref": "#/components/schemas/Addition"
+                                "$ref": "#/components/schemas/Orders"
                             }
                         }
                     }
                 },
                 "description": "Post additions",
                 "tags": [
-                    "Additions"
+                    "Orders"
                 ],
                 "responses": {
                     "200":{
@@ -1418,7 +1420,8 @@
                         "type": "integer"
                     },
                     "Date":{
-                        "type": "string"
+                        "type": "string",
+                        "format": "date"
                     },
                     "SlotsNumber":{
                         "type": "integer"
@@ -1441,7 +1444,8 @@
                 "type": "object",
                 "properties": {
                     "Date":{
-                        "type": "string"
+                        "type": "string",
+                        "format": "date"
                     },
                     "IdPlace":{
                         "type": "integer"
@@ -2005,6 +2009,63 @@
                 "properties": {
                     "Name":{
                         "type": "string"
+                    },
+                    "Price":{
+                        "type": "integer"
+                    }
+                }
+            },
+            "Orders":{
+                "type": "object",
+                "properties": {
+                    "Description":{
+                        "type": "string"
+                    },
+                    "IdVisit":{
+                        "type": "integer"
+                    },
+                    "IdAddress":{
+                        "type": "integer"
+                    },
+                    "Price":{
+                        "type": "integer"
+                    },
+                    "Items":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Item"
+                        }
+                    }
+                }
+            },
+            "Item":{
+                "type": "object",
+                "properties": {
+                    "IdProduct":{
+                        "type": "integer"
+                    },
+                    "IdSize":{
+                        "type": "integer"
+                    },
+                    "Price":{
+                        "type": "integer"
+                    },
+                    "Additions":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/AdditionGet"
+                        }
+                    }
+                }
+            },
+            "AdditionGet":{
+                "type":"object",
+                "properties":{
+                    "ID":{
+                        "type":"integer"
+                    },
+                    "Name":{
+                        "type":"string"
                     },
                     "Price":{
                         "type": "integer"
