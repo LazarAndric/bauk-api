@@ -7,7 +7,10 @@
     },
     "servers": [
         {
-            "url": "http://localhost:5000"
+            "url": "https://localhost"
+        },
+        {
+            "url": "http://localhost:500"
         }
     ],
     "security": [
@@ -416,7 +419,7 @@
                         "AppiId": []
                     }
                 ],
-                "description": "",
+                "description": "Get all places",
                 "tags": [
                     "Places"
                 ],
@@ -439,11 +442,11 @@
                                                     },
                                                     "param": {
                                                         "type": "string",
-                                                        "example": "authorization"
+                                                        "example": "AreaCode"
                                                     },
                                                     "location": {
                                                         "type": "string",
-                                                        "example": "headers"
+                                                        "example": "body"
                                                     }
                                                 }
                                             }
@@ -464,7 +467,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/GetUser"
+                                    "$ref": "#/components/schemas/Places"
                                 }
                             }
                         }
@@ -486,7 +489,7 @@
                         }
                     }
                 },
-                "description": "",
+                "description": "Add new place",
                 "tags": [
                     "Places"
                 ],
@@ -560,7 +563,7 @@
                         "required": true
                     }
                 ],
-                "description": "",
+                "description": "Get place by id",
                 "tags": [
                     "Places"
                 ],
@@ -608,7 +611,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/GetUser"
+                                    "$ref": "#/components/schemas/Places"
                                 }
                             }
                         }
@@ -620,6 +623,7 @@
             "post": {
                 "security": [
                     {
+                        "ChangePassword": [],
                         "AppiId": []
                     }
                 ],
@@ -692,7 +696,7 @@
                 }
             }
         },
-        "/authorization/forgotPassword": {
+        "/authorization/sendCode": {
             "post": {
                 "security": [
                     {
@@ -1384,11 +1388,41 @@
             "get": {
                 "security": [
                     {
-                        "AppiId": [],
-                        "BearerAuth": []
+                        "AppiId": []
                     }
                 ],
-                "description": "",
+                "description": "Get picture of product",
+                "tags": [
+                    "Pictures"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }            
+        },
+        "/pictures/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AppiId": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    }
+                ],
+                "description": "Get picture by product id",
                 "tags": [
                     "Pictures"
                 ],
@@ -1566,7 +1600,17 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "Application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/Addition"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "204": {
                         "description": "No Content"
@@ -1619,13 +1663,20 @@
                         "required": true
                     }
                 ],
-                "description": "Get addition",
+                "description": "Get addition by id",
                 "tags": [
                     "Additions"
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "Application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Addition"
+                                }
+                            }
+                        }
                     },
                     "204": {
                         "description": "No Content"
@@ -1657,7 +1708,7 @@
                         "required": true
                     }
                 ],
-                "description": "Get addition",
+                "description": "Edit addition",
                 "tags": [
                     "Additions"
                 ],
@@ -1675,7 +1726,8 @@
             "post": {
                 "security": [
                     {
-                        "AppiId": []
+                        "AppiId": [],
+                        "BearerAuth": []
                     }
                 ],
                 "requestBody": {
@@ -1790,13 +1842,40 @@
                         }
                     }
                 },
-                "description": "Post additions",
+                "description": "Post orders",
                 "tags": [
                     "Orders"
                 ],
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            },
+            "get": {
+                "security": [
+                    {
+                        "AppiId": [],
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get order",
+                "tags": [
+                    "Orders"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "Application/json":{
+                                "schema":{
+                                    "$ref": "#/components/schemas/Orders"
+                                }
+                            }
+                        }
                     },
                     "204": {
                         "description": "No Content"
@@ -1812,7 +1891,7 @@
                         "BearerAuth": []
                     }
                 ],
-                "description": "",
+                "description": "Get status of order",
                 "tags": [
                     "Orders"
                 ],
@@ -1841,7 +1920,7 @@
                         }
                     }
                 },
-                "description": "Post additions",
+                "description": "Set status for orders",
                 "tags": [
                     "Orders"
                 ],
@@ -1976,8 +2055,6 @@
                     "LastName",
                     "PhoneNumber",
                     "Email",
-                    "IdStatus",
-                    "IdRole",
                     "Password",
                     "Adressess"
                 ],
@@ -1993,12 +2070,6 @@
                     },
                     "Email": {
                         "type": "string"
-                    },
-                    "IdStatus": {
-                        "type": "integer"
-                    },
-                    "IdRole": {
-                        "type": "integer"
                     },
                     "Password": {
                         "type": "string"

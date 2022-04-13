@@ -9,10 +9,13 @@ import * as userRepo from './../dataRepos/userRepo.js'
 import * as authRepo from './../dataRepos/authRepo.js'
 import * as userSchema from '../middleware/validationSchema.js'
 import * as jwt from '../utility/jwtHandler.js'
+import env from 'dotenv'
+
+env.config()
 
 const router = express.Router()
 
-router.post('/loginEmail', userSchema.loginSchema, auth.validateInput,
+router.post('/loginEmail', userSchema.loginSchema, auth.validateInput, auth.verifyTempToken,
     async (req,res)=>{
         const user=await userRepo.getUserIdByEmail(req.body.Email)
         if(user.length===0) return res.sendStatus(403)
@@ -37,7 +40,7 @@ router.post('/loginPhone', userSchema.changePassword, auth.validateInput, async(
     //Currently not implemented
 })
 
-router.post('/forgotPassword', userSchema.emailSchema, auth.validateInput,
+router.post('/sendCode', userSchema.emailSchema, auth.validateInput,
     async (req,res)=>{
         if(!await userRepo.checkEmail(req.body.Email))
             return res.status(403).send({Message:'Email is not exist'})
@@ -77,6 +80,12 @@ router.post('/changePassword', auth.verifyTempToken,
 
 router.post('/register', userSchema.userSchema, auth.validateInput,
     async (req,res)=>{
+        let role=await userRepo.getRoles()
+        role=role.find(r=>r.RoleName===process.env.DEFAULT_ROLE)
+
+        let status=await userRepo.getStatus()
+        status=status.find(r=>r.Status===process.env.DEFAULT_STATUS)
+        
         const password=hashPassword(req.body.Password, uuidv4())
         const ID=uuidv4()
         let user=await userRepo.setUserAsync(
@@ -86,8 +95,8 @@ router.post('/register', userSchema.userSchema, auth.validateInput,
             LastName: req.body.LastName,
             Email: req.body.Email,
             PhoneNumber: req.body.PhoneNumber,
-            IdStatus: req.body.IdStatus,
-            IdRole: req.body.IdRole
+            IdStatus: status.ID,
+            IdRole: role.ID
         })
         if(errorEventHandler(user).bool) return res.sendStatus(403)
         if(user.affectedRows==0) return res.sendStatus(403)
@@ -99,11 +108,7 @@ router.post('/register', userSchema.userSchema, auth.validateInput,
         if(errorEventHandler(user).bool) return res.sendStatus(403)
         if(passwordResult.affectedRows==0) return res.sendStatus(403)
 
-
-        for(const address of req.body.Addresses)
-        {
-            address.IdUser=ID
-        }
+        for(const address of req.body.Addresses) address.IdUser=ID
         const addressResult= await userRepo.postAddressAsync(req.body.Addresses)
         if(addressResult.affectedRows==0) return res.sendStatus(403)
         res.sendStatus(201)
@@ -116,11 +121,6 @@ router.post('/generateToken', userSchema.generatetokenSchema, auth.validateInput
     const user = await userRepo.getUserById(userId.IdUser)
     const token=jwtHandler.generateToken(req.headers, user[0])
     return res.header(token).sendStatus(205)
-})
-
-router.post('/log', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, (req,res)=>{
-    if(req.user) return res.status(200).json(req.user)
-    res.sendStatus(403)
 })
 
 export default router

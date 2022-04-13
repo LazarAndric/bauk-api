@@ -19,7 +19,12 @@ router.get('/:id', async (req,res)=>{
 
 router.post('/', async (req,res)=>{
         req.body.Active=1
-        let result=await placeRepo.postPlaceAsync(req.body)
+        let result=await placeRepo.postPlaceAsync({
+                ID:req.body.ID,
+                PlaceName:req.body.PlaceName,
+                AreaCode:req.body.AreaCode,
+                Active: false
+        })
         res.sendStatus(200)
 })
 

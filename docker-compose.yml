@@ -1,0 +1,25 @@
+services:
+    db:
+        image: mysql
+        restart: unless-stopped
+        volumes:
+            - "./.data/db:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: mydb
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+        ports:
+            - 3370:3306
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+          - .:/app
+          - '/app/node_modules'
+        restart: unless-stopped
+        depends_on: 
+            - db
+        ports:
+            - 5000:5000

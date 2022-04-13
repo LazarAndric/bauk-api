@@ -7,12 +7,12 @@ import * as validationSchema from '../middleware/validationSchema.js'
 
 const router = express.Router()
 
-router.post('/', async(req,res)=>{
+router.post('/', auth.verifyUserToken, auth.verifyUserAdminAsync, async(req,res)=>{
     const result=await orderRepo.postStatus(req.body)
     return res.sendStatus(201)
 })
 
-router.get('/', async(req,res)=>{
+router.get('/', auth.verifyUserToken, auth.verifyUserAdminAsync, async(req,res)=>{
     const result=await orderRepo.getStatus()
     return res.status(200).send(result)
 })

@@ -1,3 +1,6 @@
+import fs from 'fs'
+import https from 'https'
+//import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
 import swaggerUi from 'swagger-ui-express'
@@ -13,9 +16,15 @@ import orderRoute from './routes/orders.js'
 import orderStatusRoute from './routes/ordersStatus.js'
 import pictureRoute from './routes/pictures.js'
 import * as auth from './middleware/authorizationMiddleware.js'
+import env from 'dotenv'
 
-const PORT = process.env.PORT || 5000
+
+env.config()
+
+//const HTTP_PORT = process.env.HTTP_PORT || 5000
+const HTTPS_PORT = process.env.HTTPS_PORT || 5001
 const app = express()
+
 
 app.use(bodyParser.json())
 
@@ -32,7 +41,9 @@ app.use('/orders', auth.authorizeRequest, orderRoute)
 app.use('/places', auth.authorizeRequest, placesRoute)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-
-app.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}`)
+https.createServer({key: fs.readFileSync('key.pem'), cert: fs.readFileSync('cert.pem')}, app)
+  .listen(HTTPS_PORT, () => {
+    console.log('Listening...')
 })
+
+//http.createServer(app).listen(HTTP_PORT)

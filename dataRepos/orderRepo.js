@@ -6,6 +6,10 @@ import * as orderTables from '../sql/sqlTables/sqlOrderTable.js'
 import * as userTables from '../sql/sqlTables/sqlUserTables.js'
 import * as productTables from '../sql/sqlTables/sqlProductTables.js'
 
+const deleteOrder=async(id)=>{
+    let sql= sqlQueries.deleteItemWithOption(orderTables.orderTable, 'ID=?')
+    return await queryWithData(sql, id)
+}
 const getOrder=async(id)=>{
     let sql=sqlQueries.getItemsByConditions('o.ID, os.Name, o.Price, o.Description, a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.AreaCode, p.Active',
     `${orderTables.orderTable} o, ${orderTables.orderStatusTable} os, ${orderTables.orderAddressTable} oa, ${userTables.addressTable} a, ${userTables.placeTable} p`,
@@ -33,20 +37,30 @@ const postAddress=async(address)=>{
     return await queryWithData(sql, address)
 }
 
-// const getOrders=async()=>{
-//     let sql=sqlQueries.getItemsByConditions('v.ID, v.Date, v.SlotsNumber, v.Price, p.PlaceName, p.AreaCode, p.Active',
-//     `${visitTables.placeTable} p, ${visitTables.visitTable} v`,
-//     'v.IdPlace=p.ID')
-//     let result= await queryWithoutData(sql)
-//     for(let res of result)
-//     {
-//         sql=sqlQueries.getItemsByConditions('o.ID, o.Price, o.Description, os.Name, u.FirstName, u.LastName, u.PhoneNumber, u.Email',
-//         `${visitTables.ordersTable} vo, ${itemTables.orderTable} o, ${itemTables.orderUserTable} ou, ${itemTables.userTable} u, ${itemTables.orderStatusTable} os`,
-//         'vo.IdVisit=? AND vo.IdOrder=o.ID AND o.IdOrderStatus=os.ID AND o.ID=ou.IdOrder AND ou.IdUser=u.ID')
-//         res.Orders=await queryWithData(sql, res.ID)
-//     }
-//     return result
-// }
+const getOrders=async(id)=>{
+    let sql=sqlQueries.getItemsByConditions('o.ID, os.Name, o.Price, o.Description, a.StreetAndNumber, a.GpsLocation, p.PlaceName, p.AreaCode, p.Active',
+    `${orderTables.orderUserTable} ou, ${orderTables.orderTable} o, ${orderTables.orderStatusTable} os, ${orderTables.orderAddressTable} oa, ${userTables.addressTable} a, ${userTables.placeTable} p`,
+    'ou.IdUser=? AND ou.IdOrder=o.ID AND oa.IdOrder= o.ID AND a.ID=oa.IdAddress AND p.ID=a.IdPlace AND os.ID=o.IdOrderStatus')
+    let result=await queryWithData(sql, id)
+    let orders=Object
+    orders=result
+    for(let order of orders){
+        sql=sqlQueries.getItemsByConditions('i.ID, i.Price, i.Comments, p.Name, p.Available, p.Description, pi.File_Path, ps.Price, s.Size',
+        `${itemTables.itemTable} i, ${productTables.productTable} p, ${productTables.pictureTable} pi, ${productTables.productSizeTable} ps, ${productTables.sizeTable} s`,
+        'i.IdOrder=? AND i.IdProduct=p.ID AND p.IdPicture=pi.ID AND i.IdSize=ps.ID AND ps.IdSize=s.ID')
+        result=await queryWithData(sql, order.ID)
+        order.Items=result
+        for(let item of order.Items)
+        {
+            sql=sqlQueries.getItemsByConditions('a.ID, a.Name, a.Price',
+            `${itemTables.additionsTable} ad, ${productTables.additionTable} a`,
+            'ad.IdItem=? AND ad.IdAddition=a.ID')
+            item.Additions=await queryWithData(sql, item.ID)
+        }
+    }    
+    return orders
+}
+
 const postStatus=async(status)=>{
     let sql=sqlQueries.setItem(orderTables.orderStatusTable)
     return await queryWithData(sql, status)
@@ -108,4 +122,4 @@ const postUsersTable=async(orderUser)=>{
     return await queryWithData(sql, orderUser)
 }
 
-export {postStatus, getStatus, postUsersTable, postOrdersTable, getVisitByAddress, putVisit, postAddress, postAddition, postItem, postAdditions, getOrder, postOrder, putOrder, postOrders}
+export {getOrders, postStatus, getStatus, postUsersTable, postOrdersTable, getVisitByAddress, putVisit, postAddress, postAddition, postItem, postAdditions, getOrder, postOrder, putOrder, postOrders}

@@ -1,7 +1,6 @@
 import express from 'express'
 import * as orderRepo from '../dataRepos/orderRepo.js'
 import * as productRepo from '../dataRepos/productRepo.js'
-import * as userRepo from '../dataRepos/userRepo.js'
 import * as visitRepo from '../dataRepos/visitRepo.js'
 import * as auth from '../middleware/authorizationMiddleware.js'
 import * as validationSchema from '../middleware/validationSchema.js'
@@ -13,12 +12,11 @@ router.get('/:id', async(req,res)=>{
     return res.status(200).send(result)
 })
 
-// router.get('/', async(req,res)=>{
-//     const result=await orderRepo.getVisits()
-//     return res.status(200).send(result)
-// })
+router.get('/', auth.verifyUserToken, auth.verifyUserAsync, async(req,res)=>{
+    const result=await orderRepo.getOrders(req.user.ID)
+    return res.status(200).send(result)
+})
 
-// //NO AUTH
 router.post('/', validationSchema.orders, auth.validateInput, auth.verifyUserToken, async(req,res)=>{
     const visit=await visitRepo.isAddressExist(req.body.IdVisit,req.body.IdAddress, req.user.ID)
     if(visit) return res.sendStatus(404)
@@ -35,7 +33,7 @@ router.post('/', validationSchema.orders, auth.validateInput, auth.verifyUserTok
         IdVisit:idVisit[0].ID,
         IdOrder:result.insertId
     })
-    //Update price
+    
     r=await orderRepo.putVisit(idVisit[0].ID, req.body.Price)
     r=await orderRepo.postAddress({
         IdOrder: result.insertId,
@@ -60,14 +58,5 @@ router.post('/', validationSchema.orders, auth.validateInput, auth.verifyUserTok
     }
     return res.status(200).send('Created')
 })
-// router.post('/multi', validationSchema.postSizes, auth.validateInput, async(req,res)=>{
-//     const result=await orderRepo.postVisits(req.body)
-//     return res.status(200).send('Created')
-// })
-
-// router.put('/:id', validationSchema.postSize, auth.validateInput, async(req,res)=>{
-//     await orderRepo.putVisit(req.body, req.params.id)
-//     return res.sendStatus(200)
-// })
 
 export default router

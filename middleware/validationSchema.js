@@ -22,8 +22,6 @@ const userSchema=[
     body('LastName').isString().isLength({min:2}),
     body('PhoneNumber').isMobilePhone('sr-RS'),
     emailSchema,
-    body('IdStatus').isNumeric({no_symbols:true}),
-    body('IdRole').isNumeric({no_symbols:true}).exists('checkNull'),
     passwordSchema,
     body('Addresses').isArray().isLength({min:1}),
     body('Addresses.*.StreetAndNumber').exists('checkNull'),
