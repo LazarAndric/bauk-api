@@ -1,3 +1,4 @@
+import open from 'open'
 import fs from 'fs'
 import https from 'https'
 //import http from 'http'
@@ -46,4 +47,5 @@ https.createServer({key: fs.readFileSync('key.pem'), cert: fs.readFileSync('cert
     console.log('Listening...')
 })
 
+await open('https://localhost/api-docs')
 //http.createServer(app).listen(HTTP_PORT)
