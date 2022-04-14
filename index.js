@@ -1,7 +1,7 @@
 import open from 'open'
 import fs from 'fs'
 import https from 'https'
-//import http from 'http'
+import http from 'http'
 import express from 'express'
 import bodyParser from 'body-parser'
 import swaggerUi from 'swagger-ui-express'
@@ -22,7 +22,7 @@ import env from 'dotenv'
 
 env.config()
 
-//const HTTP_PORT = process.env.HTTP_PORT || 5000
+const HTTP_PORT = process.env.HTTP_PORT || 5000
 const HTTPS_PORT = process.env.HTTPS_PORT || 5001
 const app = express()
 
@@ -47,5 +47,8 @@ https.createServer({key: fs.readFileSync('key.pem'), cert: fs.readFileSync('cert
     console.log('Listening...')
 })
 
-await open('https://localhost/api-docs')
-//http.createServer(app).listen(HTTP_PORT)
+await open('https://localhost:'+HTTPS_PORT+ '/api-docs/')
+
+http.createServer(app).listen(HTTP_PORT)
+
+await open('http://localhost:'+HTTP_PORT+ '/api-docs/')
