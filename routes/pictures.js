@@ -17,7 +17,7 @@ async(req,res)=>{
     return res.status(200).send(result)
 })
 
-router.post('/', auth.verifyUserToken, auth.verifyUserAdminAsync, userSchema.pictures, auth.validateInput,
+router.post('/', userSchema.pictures, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync,
 async(req,res)=>{
     const result=await productRepo.postPictures(req.body)
     return res.sendStatus(201)

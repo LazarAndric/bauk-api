@@ -5,28 +5,27 @@ import * as validationSchema from '../middleware/validationSchema.js'
 
 const router = express.Router()
 
-router.get('/:id', async(req,res)=>{
+router.get('/:id', auth.verifyUserToken, auth.verifyUserAsync, async(req,res)=>{
     const result=await visitRepo.getVisit(req.params.id)
     return res.status(200).send(result)
 })
 
-router.get('/', async(req,res)=>{
+router.get('/', auth.verifyUserToken, auth.verifyUserAsync, async(req,res)=>{
     const result=await visitRepo.getVisits()
     return res.status(200).send(result)
 })
 
-//router.post('/', userSchema.postProduct, auth.validateInput,
-router.post('/', validationSchema.postVisit, auth.validateInput, async(req,res)=>{
+router.post('/', validationSchema.postVisit, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync, async(req,res)=>{
     await visitRepo.postVisit(req.body)
     return res.sendStatus(201)
 })
 
-router.post('/multi', validationSchema.postVisits, auth.validateInput, async(req,res)=>{
+router.post('/multi', validationSchema.postVisits, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync, async(req,res)=>{
     const result=await visitRepo.postVisits(req.body)
     return res.sendStatus(201)
 })
 
-router.put('/:id', async(req,res)=>{
+router.put('/:id', auth.verifyUserToken, auth.verifyUserAdminAsync, async(req,res)=>{
     await visitRepo.putVisit(req.body, req.params.id)
     return res.sendStatus(200)
 })

@@ -7,7 +7,7 @@ import * as validationSchema from '../middleware/validationSchema.js'
 
 const router = express.Router()
 
-router.get('/:id', async(req,res)=>{
+router.get('/:id', auth.verifyUserToken, auth.verifyUserAsync, async(req,res)=>{
     const result=await orderRepo.getOrder(req.params.id)
     return res.status(200).send(result)
 })
@@ -17,7 +17,7 @@ router.get('/', auth.verifyUserToken, auth.verifyUserAsync, async(req,res)=>{
     return res.status(200).send(result)
 })
 
-router.post('/', validationSchema.orders, auth.validateInput, auth.verifyUserToken, async(req,res)=>{
+router.post('/', validationSchema.orders, auth.validateInput, auth.verifyUserToken, auth.verifyUserAsync, async(req,res)=>{
     const visit=await visitRepo.isAddressExist(req.body.IdVisit,req.body.IdAddress, req.user.ID)
     if(visit) return res.sendStatus(404)
     const product=await productRepo.getProduct(req.body.Items[0].IdProduct)

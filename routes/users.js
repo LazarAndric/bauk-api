@@ -25,25 +25,25 @@ router.get('/addresses', userSchema.auhorizedUserSchema, auth.validateInput, aut
         return res.status(200).send(result)
 })
 
-router.get('/roles',
+router.get('/roles', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync,
     async (req,res)=>{
         let result=await userRepo.getRoles()
         return res.status(200).send(result)
 })
 
-router.post('/roles',
+router.post('/roles', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync,
     async (req,res)=>{
         let result=await userRepo.postRoles(req.body)
         return res.sendStatus(201)
 })
 
-router.get('/status',
+router.get('/status', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync,
     async (req,res)=>{
         let result=await userRepo.getStatus()
         return res.status(200).send(result)
 })
 
-router.post('/status',
+router.post('/status', userSchema.auhorizedUserSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync,
     async (req,res)=>{
         let result=await userRepo.postStatus(req.body)
         return res.sendStatus(201)
@@ -67,7 +67,7 @@ router.delete('/auth', userSchema.auhorizedUserSchema, auth.validateInput, auth.
         return result.affectedRows!==0 ? res.sendStatus(202) : res.sendStatus(204)
 })
 
-router.put('/', userSchema.userEditSchema, auth.validateInput, auth.verifyUserToken,
+router.put('/', userSchema.userEditSchema, auth.validateInput, auth.verifyUserToken, auth.verifyUserAsync,
     async (req,res)=>{
         const id=req.params.id
         const result=await userRepo.putUserAsync(id, req.body)

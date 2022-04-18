@@ -18,8 +18,7 @@ async(req,res)=>{
     return res.status(200).send(result)
 })
 
-//NO AUTH
-//router.post('/', userSchema.postProduct, auth.validateInput,
+
 router.post('/', userSchema.postProduct, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync,
 async(req,res)=>{
     const result=await productRepo.postProduct({

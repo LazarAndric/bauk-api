@@ -15,7 +15,7 @@ router.get('/', async(req,res)=>{
     return result!=null ? res.status(200).send(result) : res.sendStatus(204)
 })
 
-router.post('/', validationSchema.postAddition, auth.validateInput, async(req,res)=>{
+router.post('/', validationSchema.postAddition, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync, async(req,res)=>{
     await additionRepo.postAddition(req.body)
     return res.status(200).send('Created')
 })
@@ -25,7 +25,7 @@ router.post('/multi', validationSchema.postAdditions, auth.validateInput, auth.v
     return res.status(200).send('Created')
 })
 
-router.put('/:id', validationSchema.postAddition, auth.validateInput, async(req,res)=>{
+router.put('/:id', validationSchema.postAddition, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync, async(req,res)=>{
     await additionRepo.putAddition(req.body,req.params.id)
     return res.sendStatus(200)
 })

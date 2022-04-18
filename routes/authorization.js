@@ -15,7 +15,7 @@ env.config()
 
 const router = express.Router()
 
-router.post('/loginEmail', userSchema.loginSchema, auth.validateInput, auth.verifyTempToken,
+router.post('/loginEmail', userSchema.loginSchema, auth.validateInput, auth.verifyMailToken,
     async (req,res)=>{
         const user=await userRepo.getUserIdByEmail(req.body.Email)
         if(user.length===0) return res.sendStatus(403)
@@ -49,20 +49,20 @@ router.post('/sendCode', userSchema.emailSchema, auth.validateInput,
         return res.status(200).json({ExpireDate: emailModel.ExpireDate, Message: 'Code is sent too e-mail'})
 })
 
-router.post('/verifyCode', userSchema.emailVerifyCodeSchema, auth.validateInput,
+router.post('/verifyMailCode', userSchema.verifyMailCodeSchema, auth.validateInput,
     async (req,res)=>{
         if(!await userRepo.checkEmail(req.body.Email))
             return res.sendStatus(403)
         const result=await userRepo.getUserIdByEmail(req.body.Email)
-        const emailModel=await authRepo.verifyMailCodeAsync(result[0], req.body.Code)
-        if(!emailModel.IsVerify) return res.sendStatus(401)
-        if(emailModel.ExpireDate<new Date()) return res.sendStatus(401)
-        const tmpToken=jwt.generateTempToken()
-        await authRepo.putTempTokenAsync(req.body.Email, {TempToken: tmpToken.Tempauth})
-        return res.header(tmpToken).sendStatus(200)
+        const mailModel=await authRepo.verifyMailCodeAsync(result[0], req.body.Code)
+        if(!mailModel.IsVerify) return res.sendStatus(401)
+        if(mailModel.ExpireDate<new Date()) return res.sendStatus(401)
+        const mailToken=jwt.generateMailToken()
+        await authRepo.putMailTokenAsync(req.body.Email, {MailToken: mailToken.MailToken})
+        return res.header(mailToken).sendStatus(200)
 })
 
-router.post('/changePassword', auth.verifyTempToken,
+router.post('/changePassword', auth.verifyMailToken,
     async(req,res)=>{
         const salt=uuidv4()
         let email=req.body.Email

@@ -22,7 +22,7 @@ import env from 'dotenv'
 
 env.config()
 
-const HTTP_PORT = process.env.HTTP_PORT || 5000
+// const HTTP_PORT = process.env.HTTP_PORT || 5000
 const HTTPS_PORT = process.env.HTTPS_PORT || 5001
 const app = express()
 
@@ -42,13 +42,13 @@ app.use('/orders', auth.authorizeRequest, orderRoute)
 app.use('/places', auth.authorizeRequest, placesRoute)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-https.createServer({key: fs.readFileSync('key.pem'), cert: fs.readFileSync('cert.pem')}, app)
+https.createServer({key: fs.readFileSync(process.env.KEY_PATH), cert: fs.readFileSync(process.env.CERT_PATH)}, app)
   .listen(HTTPS_PORT, () => {
     console.log('Listening...')
 })
 
 await open('https://localhost:'+HTTPS_PORT+ '/api-docs/')
 
-http.createServer(app).listen(HTTP_PORT)
+// http.createServer(app).listen(HTTP_PORT)
 
-await open('http://localhost:'+HTTP_PORT+ '/api-docs/')
+// await open('http://localhost:'+HTTP_PORT+ '/api-docs/')

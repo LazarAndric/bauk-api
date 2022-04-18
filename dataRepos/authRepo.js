@@ -68,17 +68,17 @@ const getUserByToken=async(refreshToken)=>{
     return result[0]
 }
 
-const getTempTokenByEmailAsync=async(refreshToken)=>{
-    const sql= sqlQueries.getItemsByConditions('a.TempToken', `${tables.userTable} u, ${tables.authTable} a`, 'u.Email= ? AND u.ID=a.IdUser')
+const getMailTokenByEmailAsync=async(refreshToken)=>{
+    const sql= sqlQueries.getItemsByConditions('a.MailToken', `${tables.userTable} u, ${tables.authTable} a`, 'u.Email= ? AND u.ID=a.IdUser')
     const result= await queryWithData(sql, refreshToken)
     return result[0]
 }
-const putTempTokenAsync=async(email, tempToken)=>{
+const putMailTokenAsync=async(email, mailToken)=>{
     const sql= sqlQueries.updateItem(`${tables.userTable} u, ${tables.authTable} a`, 'u.Email= ? AND u.ID=a.IdUser')
-    const result= await queryWithData(sql, [tempToken, email])
+    const result= await queryWithData(sql, [mailToken, email])
     return result[0]
 }
 
 export {postMailCode, verifyMailCodeAsync, checkId, putMailCodeAsync, getMailCodeAsync,
     generateMailCodeAsync, postAuthTokenAsync,
-    checkUserTokenAsync, getUserByToken, putAuthTokenAsync, getTempTokenByEmailAsync, putTempTokenAsync}
+    checkUserTokenAsync, getUserByToken, putAuthTokenAsync, getMailTokenByEmailAsync, putMailTokenAsync}

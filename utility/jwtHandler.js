@@ -23,14 +23,14 @@ const generateToken=(headers, user)=>{
     return {Token: secLogin, Refresh: refresh}
 }
 
-const generateTempToken=()=>{
+const generateMailToken=()=>{
     const token=jwt.sign({
-        TempString: 'TempToken'}, process.env.TEMP_TOKEN,{expiresIn:'5m'})
-    return {Tempauth: token}
+        EmailTokenString: 'MailToken'}, process.env.VERIFY_MAIL_TOKEN,{expiresIn:'5m'})
+    return {MailToken: token}
 }
-const verifyTempToken=(token)=>{
+const verifyMailToken=(token)=>{
     try{
-        const t= jwt.verify(token, process.env.TEMP_TOKEN,{expiresIn:'5m'})
+        const t= jwt.verify(token, process.env.VERIFY_MAIL_TOKEN,{expiresIn:'5m'})
         return t ? true : false
     }
     catch(ex){
@@ -52,4 +52,4 @@ const verifyToken=(token, aud)=>{
     return user
 }
 
-export {generateToken, verifyToken, generateTempToken, verifyTempToken}
+export {generateToken, verifyToken, generateMailToken, verifyMailToken}

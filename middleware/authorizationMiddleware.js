@@ -59,14 +59,14 @@ export function verifyUserToken2(req,res, next) {
     }
 }
 
-const verifyTempToken=async (req,res, next)=>{
-    const token= req.headers['tempauth']
+const verifyMailToken=async (req,res, next)=>{
+    const token= req.headers['mailtoken']
     if(!token) return res.sendStatus(401)
-    const auth=jwt.verifyTempToken(token)
+    const auth=jwt.verifyMailToken(token)
     if(!auth) return res.sendStatus(401)
-    const tempToken= await authRepo.getTempTokenByEmailAsync(req.body.Email)
-    if(tempToken==undefined) return res.sendStatus(401)
-    return tempToken.TempToken===token ? next() : res.sendStatus(401)
+    const mailToken= await authRepo.getMailTokenByEmailAsync(req.body.Email)
+    if(mailToken==undefined) return res.sendStatus(401)
+    return mailToken.MailToken===token ? next() : res.sendStatus(401)
 }
 
 export function validateInput(req, res, next){
@@ -86,4 +86,4 @@ const authorizeRequest= (req,res, next) =>{
     return req.headers['appiid']==process.env.AUTHORIZE_REQUEST ? next() : res.sendStatus(401)
 }
 
-export {validateUserAsync, verifyTempToken, authorizeRequest}
+export {validateUserAsync, verifyMailToken, authorizeRequest}

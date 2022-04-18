@@ -4,7 +4,7 @@ import * as tables from '../sql/sqlTables/sqlUserTables.js'
 import * as orderTable from '../sql/sqlTables/sqlOrderTable.js'
 
 const getUsersAsync=async()=>{
-    let sql=sqlQueries.getItemsByConditions('u.ID, u.FirstName, u.LastName, u.PhoneNumber, u.Email, s.ID, s.Status, r.ID, r.RoleName',
+    let sql=sqlQueries.getItemsByConditions('u.ID, u.FirstName, u.LastName, u.PhoneNumber, u.Email, s.Status, r.RoleName',
         `${tables.statusTable} s , ${tables.userTable} u, ${tables.roleTable} r`,
         `u.IdStatus=s.ID AND u.IdRole=r.ID`)
     const result=await queryWithoutData(sql)

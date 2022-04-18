@@ -270,11 +270,11 @@ CREATE TABLE IF NOT EXISTS `bauk_ciz_db`.`auth` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `IdUser` VARCHAR(45) NOT NULL,
   `RefreshToken` VARCHAR(200) NOT NULL,
-  `TempToken` VARCHAR(200) NULL DEFAULT NULL,
+  `MailToken` VARCHAR(200) NULL DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `IdUser_UNIQUE` (`IdUser` ASC) VISIBLE,
   UNIQUE INDEX `RefreshToken_UNIQUE` (`RefreshToken` ASC) VISIBLE,
-  UNIQUE INDEX `TempToken_UNIQUE` (`TempToken` ASC) VISIBLE,
+  UNIQUE INDEX `MailToken_UNIQUE` (`MilToken` ASC) VISIBLE,
   CONSTRAINT `Auth-User`
     FOREIGN KEY (`IdUser`)
     REFERENCES `bauk_ciz_db`.`user` (`ID`)

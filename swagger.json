@@ -3,21 +3,18 @@
     "info": {
         "title": "Bauk Cheescake",
         "version": "0.0.11",
-        "description": "appiid: 3232f21e-653e-4e98-b46d-c34cbc751182"
+        "description": "appiid: 3232f21e-653e-4e98-b46d-c34cbc751182 - TODO: All users can post new addresses"
     },
     "servers": [
         {
-            "url": "https://localhost"
-        },
-        {
-            "url": "http://localhost:500"
+            "url": "https://localhost:443"
         }
     ],
     "security": [
         {
             "BearerAuth": [],
             "Refresh": [],
-            "ChangePassword": [],
+            "MailAuth": [],
             "AppiId": []
         }
     ],
@@ -477,6 +474,7 @@
             "post": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -623,7 +621,7 @@
             "post": {
                 "security": [
                     {
-                        "ChangePassword": [],
+                        "MailAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -790,7 +788,7 @@
                 }
             }
         },
-        "/authorization/verifyCode": {
+        "/authorization/verifyMailCode": {
             "post": {
                 "security": [
                     {
@@ -801,7 +799,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/verifyCode"
+                                "$ref": "#/components/schemas/VerifyMailCode"
                             }
                         }
                     }
@@ -852,7 +850,7 @@
                     "200": {
                         "description": "OK",
                         "headers": {
-                            "Tempauth": {
+                            "MailAuth": {
                                 "schema": {
                                     "type": "string",
                                     "example": "asdffdger"
@@ -867,7 +865,7 @@
             "post": {
                 "security": [
                     {
-                        "ChangePassword": [],
+                        "MailAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1084,6 +1082,7 @@
             "get": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1120,6 +1119,7 @@
             "put": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1160,6 +1160,7 @@
             "get": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1189,6 +1190,7 @@
             "post": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1219,6 +1221,7 @@
             "post": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1440,6 +1443,7 @@
             "post": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1489,6 +1493,7 @@
             "put": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1558,6 +1563,7 @@
             "post": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1620,6 +1626,7 @@
             "post": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1686,6 +1693,7 @@
             "put": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1760,6 +1768,7 @@
             "get": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1789,6 +1798,7 @@
             "put": {
                 "security": [
                     {
+                        "BearerAuth": [],
                         "AppiId": []
                     }
                 ],
@@ -1946,10 +1956,10 @@
                 "in": "header",
                 "name": "Refresh"
             },
-            "ChangePassword": {
+            "MailAuth": {
                 "type": "apiKey",
                 "in": "header",
-                "name": "Tempauth"
+                "name": "MailToken"
             },
             "AppiId": {
                 "type": "apiKey",
@@ -2445,7 +2455,7 @@
                     }
                 }
             },
-            "verifyCode": {
+            "VerifyMailCode": {
                 "type": "object",
                 "required": [
                     "Email",

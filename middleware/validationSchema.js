@@ -40,7 +40,7 @@ const userEditSchema=[
     passwordSchema
 ]
 
-const emailVerifyCodeSchema=[
+const verifyMailCodeSchema=[
     emailSchema,
     body('Code').isLength({min:5, max:5})
 ]
@@ -57,13 +57,19 @@ const generatetokenSchema=[
 
 const changePassword=[
     emailSchema,
-    header('Tempauth').isString().exists('checkNull'),
+    header('mailtoken').isString().exists('checkNull'),
     passwordSchema
 ]
 
 const postPlace=[
-    body('PlaceName').exists('checkNull'),
-    body('AreaCode').exists('checkNull')
+    body('PlaceName').isString().exists('checkNull'),
+    body('AreaCode').isNumeric().exists('checkNull')
+]
+
+const putPlaces=[
+    body('PlaceName').isString().exists('checkNull'),
+    body('AreaCode').isNumeric().exists('checkNull'),
+    body('Active').isBoolean().exists('checkNull')
 ]
 
 const pictures=[
@@ -126,6 +132,9 @@ const orders=[
     body('Items.*.Price').isFloat().exists('checkNull'),
     body('Items.*.Additions').exists('checkNull'),
     body('Items.*.Additions.*.ID').isInt().exists('checkNull')
-
 ]
-export {pictures, orders, postVisits, postVisit, postAddition, postAdditions, postSizes, postSize, postProduct, postPlace, userSchema, emailVerifyCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}
+
+const postStatus=[
+    body('Name').isString().exists('checkNull')
+]
+export {postStatus, putPlaces, pictures, orders, postVisits, postVisit, postAddition, postAdditions, postSizes, postSize, postProduct, postPlace, userSchema, verifyMailCodeSchema, emailSchema, loginSchema, auhorizedUserSchema, userEditSchema, changePassword, generatetokenSchema}

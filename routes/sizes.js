@@ -20,12 +20,12 @@ router.post('/', validationSchema.postSize, auth.validateInput, auth.verifyUserT
     return res.status(200).send('Created')
 })
 
-router.post('/multi', validationSchema.postSizes, auth.validateInput, async(req,res)=>{
+router.post('/multi', validationSchema.postSizes, auth.validateInput,auth.verifyUserToken, auth.verifyUserAdminAsync, async(req,res)=>{
     const result=await sizeRepo.postSizes(req.body)
     return res.status(200).send('Created')
 })
 
-router.put('/:id', validationSchema.postSize, auth.validateInput, async(req,res)=>{
+router.put('/:id', validationSchema.postSize, auth.validateInput, auth.verifyUserToken, auth.verifyUserAdminAsync, async(req,res)=>{
     await sizeRepo.putSize(req.body, req.params.id)
     return res.sendStatus(200)
 })
