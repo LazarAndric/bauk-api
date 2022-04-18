@@ -48,7 +48,3 @@ https.createServer({key: fs.readFileSync(process.env.KEY_PATH), cert: fs.readFil
 })
 
 await open('https://localhost:'+HTTPS_PORT+ '/api-docs/')
-
-// http.createServer(app).listen(HTTP_PORT)
-
-// await open('http://localhost:'+HTTP_PORT+ '/api-docs/')
