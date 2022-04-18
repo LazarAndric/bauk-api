@@ -23,7 +23,6 @@ const getProducts=async()=>{
     let sql=sqlQueries.getItemsByConditions('p.ID, p.Name, p.Available, p.Description, pi.File_Path',
     `${productTables.productTable} p, ${productTables.pictureTable} pi`, 'p.IdPicture=pi.ID')
     const data=await queryWithoutData(sql)
-    console.log(data)
     for(const product of data){
         product.Available= product.Available==1 ? true : false
         sql=sqlQueries.getItemsByConditions('ps.ID, s.Size, ps.Price',
