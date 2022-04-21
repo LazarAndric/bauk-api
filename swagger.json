@@ -3,11 +3,11 @@
     "info": {
         "title": "Bauk Cheescake",
         "version": "0.0.11",
-        "description": "appiid: 3232f21e-653e-4e98-b46d-c34cbc751182 - TODO: All users can post new addresses"
+        "description": ""
     },
     "servers": [
         {
-            "url": "https://localhost:8443"
+            "url": "https://167.233.3.121:8443"
         }
     ],
     "security": [

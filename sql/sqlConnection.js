@@ -10,8 +10,7 @@ const pool= mySql.createPool({
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     //database: cfg.db.schemaName,
-    connectionLimit:10,
-    queueLimit:10
+    connectionLimit:20,
 })
 
 const promisePool = pool.promise();
