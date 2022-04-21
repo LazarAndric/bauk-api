@@ -13,7 +13,8 @@ const transport = nodemailer.createTransport({
 });
 console.log('SMTP Configured')
 
-const sendMail=(from, to, subject, text, html)=>{
+const sendMail=(to, subject, text, html)=>{
+    const from=process.env.EMAIL
     const message = {from, to, subject, text, html}
     transport.sendMail(message, (error)=>{
     if(error){

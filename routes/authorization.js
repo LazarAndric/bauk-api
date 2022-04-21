@@ -47,7 +47,7 @@ router.post('/sendCode', userSchema.emailSchema, auth.validateInput,
         const result=await userRepo.getUserIdByEmail(req.body.Email)
         const emailModel=await authRepo.generateMailCodeAsync(result[0], req.body.Email)
         return emailModel.IsSent ? 
-        res.status(200).json({ExpireDate: emailModel.ExpireDate, Message: 'Code is sent too e-mail'}) 
+        res.status(200).send({ExpireDate: emailModel.ExpireDate, Message: 'Code is sent too e-mail'}) 
         : res.status(402).send({Message: 'Email is not sent'})
         
 })

@@ -3,6 +3,9 @@ import * as sqlQueries from '../sql/sqlQueries.js'
 import * as tables from '../sql/sqlTables/sqlUserTables.js'
 import stringMaker from '../utility/stringCreator.js'
 import mailer from '../utility/nodeMailer.js'
+import env from 'dotenv'
+
+env.config()
 
 const generateMailCodeAsync=async(result, email)=>{
     const mailCode=stringMaker(5)
@@ -12,7 +15,7 @@ const generateMailCodeAsync=async(result, email)=>{
         await putMailCodeAsync(result.ID, mailCode, date)
     else await postMailCode(result.ID, mailCode, date)
 
-    const isSent=mailer('Bauk cheesecake', email, 'Verification mail', `Your veification code is: ${mailCode}`,'')
+    const isSent=mailer(email, 'Verification mail', `Your veification code is: ${mailCode}`,'')
 
     return {IsSent: isSent, Code: mailCode, ExpireDate: date}
 }
