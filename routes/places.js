@@ -6,18 +6,18 @@ import * as userSchema from '../middleware/validationSchema.js'
 
 const router = express.Router()
 
-router.get('/', auth.verifyUserToken, auth.verifyUserAsync, async (req,res)=>{
+router.get('/', async (req,res)=>{
         const result=await placeRepo.getPlacesAsync();
         return result.length!==0 ? res.status(200).send(result) : res.sendStatus(204)
     }
 )
 
-router.get('/:id', auth.verifyUserToken, auth.verifyUserAdminAsync, async (req,res)=>{
+router.get('/:id', async (req,res)=>{
         let result=await placeRepo.getPlaceAsync(req.params.id)
         return result.length!==0 ? res.status(200).send(result[0]) : res.sendStatus(204)
 })
 
-router.post('/', userSchema.postPlace, auth.verifyUserToken, auth.verifyUserAsync, async (req,res)=>{
+router.post('/', userSchema.postPlace, auth.validateInput, async (req,res)=>{
         let result=await placeRepo.postPlaceAsync({
                 PlaceName:req.body.PlaceName,
                 AreaCode:req.body.AreaCode,
