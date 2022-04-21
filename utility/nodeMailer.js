@@ -1,11 +1,14 @@
 import nodemailer from 'nodemailer'
+import env from 'dotenv'
+
+env.config()
 
 const transport = nodemailer.createTransport({
     service: 'Gmail',
     host: 'smtp.gmail.com',
     auth: {
-        user: 'lazarndrc@gmail.com',
-        pass: 'fshfgqzsrefudyuf'
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PW
     }
 });
 console.log('SMTP Configured')
@@ -17,7 +20,7 @@ const sendMail=(from, to, subject, text, html)=>{
         console.log('Error occured '+error.message)
         return false
     }
-    console.log('Message is sent successfully ')
+    console.log('Message is sent successfully!')
     })
     return true
 }
