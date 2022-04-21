@@ -46,7 +46,10 @@ router.post('/sendCode', userSchema.emailSchema, auth.validateInput,
             return res.status(403).send({Message:'Email is not exist'})
         const result=await userRepo.getUserIdByEmail(req.body.Email)
         const emailModel=await authRepo.generateMailCodeAsync(result[0], req.body.Email)
-        return res.status(200).json({ExpireDate: emailModel.ExpireDate, Message: 'Code is sent too e-mail'})
+        return emailModel.IsSent ? 
+        res.status(200).json({ExpireDate: emailModel.ExpireDate, Message: 'Code is sent too e-mail'}) 
+        : res.status(402).send({Message: 'Email is not sent'})
+        
 })
 
 router.post('/verifyMailCode', userSchema.verifyMailCodeSchema, auth.validateInput,
@@ -58,7 +61,9 @@ router.post('/verifyMailCode', userSchema.verifyMailCodeSchema, auth.validateInp
         if(!mailModel.IsVerify) return res.sendStatus(401)
         if(mailModel.ExpireDate<new Date()) return res.sendStatus(401)
         const mailToken=jwt.generateMailToken()
-        await authRepo.putMailTokenAsync(req.body.Email, {MailToken: mailToken.MailToken})
+        if(await authRepo.checkAuthId(result[0].ID))
+            await authRepo.putMailTokenAsync(req.body.Email, {MailToken: mailToken.MailToken})
+        await authRepo.postAuthTokenAsync({IdUser: result[0].ID, MailToken: mailToken.MailToken})
         return res.header(mailToken).sendStatus(200)
 })
 

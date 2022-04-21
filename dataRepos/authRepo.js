@@ -12,8 +12,9 @@ const generateMailCodeAsync=async(result, email)=>{
         await putMailCodeAsync(result.ID, mailCode, date)
     else await postMailCode(result.ID, mailCode, date)
 
-    mailer('lazarandric97@gmail.com', email, 'Verification mail', `Your veification code is: ${mailCode}`,'')
-    return {Code: mailCode, ExpireDate: date}
+    const isSent=mailer('Bauk cheesecake', email, 'Verification mail', `Your veification code is: ${mailCode}`,'')
+
+    return {IsSent: isSent, Code: mailCode, ExpireDate: date}
 }
 
 const verifyMailCodeAsync=async(res, code)=>{
@@ -30,6 +31,12 @@ const postMailCode=async(id,mailCode, expriteDate)=>{
 
 const checkId=async(id)=>{
     const sql=sqlQueries.checkItem(tables.mailTable, 'IdUser= ?')
+    const result=await queryWithData(sql, id)
+    return Object.values(result[0]).at(0)==1
+}
+
+const checkAuthId=async(id)=>{
+    const sql=sqlQueries.checkItem(tables.authTable, 'IdUser= ?')
     const result=await queryWithData(sql, id)
     return Object.values(result[0]).at(0)==1
 }
@@ -79,6 +86,6 @@ const putMailTokenAsync=async(email, mailToken)=>{
     return result[0]
 }
 
-export {postMailCode, verifyMailCodeAsync, checkId, putMailCodeAsync, getMailCodeAsync,
+export {checkAuthId, postMailCode, verifyMailCodeAsync, checkId, putMailCodeAsync, getMailCodeAsync,
     generateMailCodeAsync, postAuthTokenAsync,
     checkUserTokenAsync, getUserByToken, putAuthTokenAsync, getMailTokenByEmailAsync, putMailTokenAsync}

@@ -22,10 +22,8 @@ import env from 'dotenv'
 
 env.config()
 
-// const HTTP_PORT = process.env.HTTP_PORT || 5000
-const HTTPS_PORT = process.env.HTTPS_PORT || 5001
+const HTTPS_PORT = process.env.HTTPS_PORT || 8443
 const app = express()
-
 
 app.use(bodyParser.json())
 
@@ -47,4 +45,4 @@ https.createServer({key: fs.readFileSync(process.env.KEY_PATH), cert: fs.readFil
     console.log('Listening...')
 })
 
-await open('https://localhost:'+HTTPS_PORT+ '/api-docs/')
+// await open('https://localhost:'+HTTPS_PORT+ '/api-docs/')

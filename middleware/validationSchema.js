@@ -73,8 +73,8 @@ const putPlaces=[
 ]
 
 const pictures=[
-    body('Name').exists('checkNull'),
-    body('File_Path').exists('checkNull')
+    body('*.Name').exists('checkNull'),
+    body('*.File_Path').exists('checkNull')
 ]
 
 const postProduct=[

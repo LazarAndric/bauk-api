@@ -5,21 +5,21 @@ const transport = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     auth: {
         user: 'lazarndrc@gmail.com',
-        pass: 'alfzgbeiwvxsmjyu'
+        pass: 'fshfgqzsrefudyuf'
     }
 });
-console.log('SMTP Configured');
+console.log('SMTP Configured')
 
 const sendMail=(from, to, subject, text, html)=>{
     const message = {from, to, subject, text, html}
-    transport.sendMail(message, (error)=>{
+    transport.sendMail(message, (error, info)=>{
     if(error){
-        console.log('Error occured');
-        console.log(error.message);
-        return;
+        console.log('Error occured '+error.message)
+        return false
     }
-    console.log('Message sent successfully!');
+    console.log('Message is sent successfully '+info)
     })
+    return true
 }
 
 export default sendMail
