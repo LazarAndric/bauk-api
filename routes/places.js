@@ -23,7 +23,7 @@ router.post('/', userSchema.postPlace, auth.validateInput, async (req,res)=>{
                 AreaCode:req.body.AreaCode,
                 Active: 0
         })
-        return errorEventHandler(result).bool ? res.sendStatus(404) : res.sendStatus(201)
+        return errorEventHandler(result).bool ? res.sendStatus(403) : res.sendStatus(201)
 })
 
 router.delete('/:id', auth.verifyUserToken, auth.verifyUserAdminAsync, async (req,res)=>{
