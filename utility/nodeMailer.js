@@ -12,12 +12,12 @@ console.log('SMTP Configured')
 
 const sendMail=(from, to, subject, text, html)=>{
     const message = {from, to, subject, text, html}
-    transport.sendMail(message, (error, info)=>{
+    transport.sendMail(message, (error)=>{
     if(error){
         console.log('Error occured '+error.message)
         return false
     }
-    console.log('Message is sent successfully '+info)
+    console.log('Message is sent successfully ')
     })
     return true
 }
