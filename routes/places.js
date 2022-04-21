@@ -23,7 +23,6 @@ router.post('/', userSchema.postPlace, auth.validateInput, async (req,res)=>{
                 AreaCode:req.body.AreaCode,
                 Active: 0
         })
-        console.log(result)
         return errorEventHandler(result).bool ? res.sendStatus(403) : res.sendStatus(201)
 })
 
